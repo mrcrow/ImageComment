@@ -7,8 +7,8 @@
 //
 
 #import "MasterViewController.h"
-
-#import "DetailViewController.h"
+#import "ImageManageController.h"
+#import "ImageViewController.h"
 
 @interface MasterViewController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -20,7 +20,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"Master", @"Master");
+        self.title = NSLocalizedString(@"Content", @"Image Lists");
     }
     return self;
 }
