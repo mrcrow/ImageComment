@@ -20,11 +20,6 @@
 		E853C3651683562A00BDC3F3 /* ImageComment.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E853C3631683562A00BDC3F3 /* ImageComment.xcdatamodeld */; };
 		E853C3681683562A00BDC3F3 /* ImageListController.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3671683562A00BDC3F3 /* ImageListController.m */; };
 		E853C36E1683562B00BDC3F3 /* ImageListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E853C36C1683562B00BDC3F3 /* ImageListController.xib */; };
-		E853C37A1683566A00BDC3F3 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3781683566A00BDC3F3 /* ImageViewController.m */; };
-		E853C37B1683566A00BDC3F3 /* ImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E853C3791683566A00BDC3F3 /* ImageViewController.xib */; };
-		E853C37F1683578100BDC3F3 /* ImageManageController.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C37D1683578100BDC3F3 /* ImageManageController.m */; };
-		E853C3801683578100BDC3F3 /* ImageManageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E853C37E1683578100BDC3F3 /* ImageManageController.xib */; };
-		E853C38816835E6600BDC3F3 /* ImageContent.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C38716835E6600BDC3F3 /* ImageContent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,14 +41,14 @@
 		E853C3661683562A00BDC3F3 /* ImageListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageListController.h; sourceTree = "<group>"; };
 		E853C3671683562A00BDC3F3 /* ImageListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageListController.m; sourceTree = "<group>"; };
 		E853C36D1683562B00BDC3F3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ImageListController.xib; sourceTree = "<group>"; };
-		E853C3771683566A00BDC3F3 /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageViewController.h; path = ../ImageViewController.h; sourceTree = "<group>"; };
-		E853C3781683566A00BDC3F3 /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageViewController.m; path = ../ImageViewController.m; sourceTree = "<group>"; };
-		E853C3791683566A00BDC3F3 /* ImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ImageViewController.xib; path = ../ImageViewController.xib; sourceTree = "<group>"; };
-		E853C37C1683578100BDC3F3 /* ImageManageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageManageController.h; path = ../ImageManageController.h; sourceTree = "<group>"; };
-		E853C37D1683578100BDC3F3 /* ImageManageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageManageController.m; path = ../ImageManageController.m; sourceTree = "<group>"; };
-		E853C37E1683578100BDC3F3 /* ImageManageController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ImageManageController.xib; path = ../ImageManageController.xib; sourceTree = "<group>"; };
-		E853C38616835E6600BDC3F3 /* ImageContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageContent.h; sourceTree = "<group>"; };
-		E853C38716835E6600BDC3F3 /* ImageContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageContent.m; sourceTree = "<group>"; };
+		E853C38916836C4700BDC3F3 /* ImageManageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageManageController.h; sourceTree = "<group>"; };
+		E853C38A16836C4700BDC3F3 /* ImageManageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageManageController.m; sourceTree = "<group>"; };
+		E853C38B16836C4800BDC3F3 /* ImageManageController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageManageController.xib; sourceTree = "<group>"; };
+		E853C38C16836C4800BDC3F3 /* ImageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
+		E853C38D16836C4800BDC3F3 /* ImageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
+		E853C38E16836C4800BDC3F3 /* ImageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageViewController.xib; sourceTree = "<group>"; };
+		E853C38F16836C6000BDC3F3 /* ImageContent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ImageContent.h; path = "Data Modal/ImageContent.h"; sourceTree = "<group>"; };
+		E853C39016836C6000BDC3F3 /* ImageContent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ImageContent.m; path = "Data Modal/ImageContent.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,13 +101,13 @@
 				E853C35B1683562A00BDC3F3 /* AppDelegate.m */,
 				E853C3661683562A00BDC3F3 /* ImageListController.h */,
 				E853C3671683562A00BDC3F3 /* ImageListController.m */,
-				E853C37C1683578100BDC3F3 /* ImageManageController.h */,
-				E853C37D1683578100BDC3F3 /* ImageManageController.m */,
-				E853C3771683566A00BDC3F3 /* ImageViewController.h */,
-				E853C3781683566A00BDC3F3 /* ImageViewController.m */,
 				E853C36C1683562B00BDC3F3 /* ImageListController.xib */,
-				E853C37E1683578100BDC3F3 /* ImageManageController.xib */,
-				E853C3791683566A00BDC3F3 /* ImageViewController.xib */,
+				E853C38916836C4700BDC3F3 /* ImageManageController.h */,
+				E853C38A16836C4700BDC3F3 /* ImageManageController.m */,
+				E853C38B16836C4800BDC3F3 /* ImageManageController.xib */,
+				E853C38C16836C4800BDC3F3 /* ImageViewController.h */,
+				E853C38D16836C4800BDC3F3 /* ImageViewController.m */,
+				E853C38E16836C4800BDC3F3 /* ImageViewController.xib */,
 				E853C38516835E4900BDC3F3 /* Data Modal */,
 				E853C3521683562A00BDC3F3 /* Supporting Files */,
 			);
@@ -136,9 +131,9 @@
 		E853C38516835E4900BDC3F3 /* Data Modal */ = {
 			isa = PBXGroup;
 			children = (
+				E853C38F16836C6000BDC3F3 /* ImageContent.h */,
+				E853C39016836C6000BDC3F3 /* ImageContent.m */,
 				E853C3631683562A00BDC3F3 /* ImageComment.xcdatamodeld */,
-				E853C38616835E6600BDC3F3 /* ImageContent.h */,
-				E853C38716835E6600BDC3F3 /* ImageContent.m */,
 			);
 			name = "Data Modal";
 			sourceTree = "<group>";
@@ -199,8 +194,6 @@
 				E853C3601683562A00BDC3F3 /* Default@2x.png in Resources */,
 				E853C3621683562A00BDC3F3 /* Default-568h@2x.png in Resources */,
 				E853C36E1683562B00BDC3F3 /* ImageListController.xib in Resources */,
-				E853C37B1683566A00BDC3F3 /* ImageViewController.xib in Resources */,
-				E853C3801683578100BDC3F3 /* ImageManageController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,9 +208,6 @@
 				E853C35C1683562A00BDC3F3 /* AppDelegate.m in Sources */,
 				E853C3651683562A00BDC3F3 /* ImageComment.xcdatamodeld in Sources */,
 				E853C3681683562A00BDC3F3 /* ImageListController.m in Sources */,
-				E853C37A1683566A00BDC3F3 /* ImageViewController.m in Sources */,
-				E853C37F1683578100BDC3F3 /* ImageManageController.m in Sources */,
-				E853C38816835E6600BDC3F3 /* ImageContent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
