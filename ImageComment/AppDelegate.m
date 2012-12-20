@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 
-#import "MasterViewController.h"
+#import "ImageListController.h"
 
 @implementation AppDelegate
 
@@ -21,7 +21,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
 
-    MasterViewController *masterViewController = [[MasterViewController alloc] initWithNibName:@"MasterViewController" bundle:nil];
+    ImageListController *masterViewController = [[ImageListController alloc] initWithNibName:@"ImageListController" bundle:nil];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
     masterViewController.managedObjectContext = self.managedObjectContext;
     self.window.rootViewController = self.navigationController;

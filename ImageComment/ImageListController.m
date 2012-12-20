@@ -6,15 +6,15 @@
 //  Copyright (c) 2012年 Wu Wenzhi. All rights reserved.
 //
 
-#import "MasterViewController.h"
+#import "ImageListController.h"
 #import "ImageManageController.h"
 #import "ImageViewController.h"
 
-@interface MasterViewController ()
+@interface ImageListController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
-@implementation MasterViewController
+@implementation ImageListController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -31,34 +31,24 @@
 	// Do any additional setup after loading the view, typically from a nib.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
 
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertImageContent:)];
     self.navigationItem.rightBarButtonItem = addButton;
 }
-
+ 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (void)insertNewObject:(id)sender
+- (void)insertImageContent:(id)sender
 {
-    NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-    NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    ImageManageController *manageController = [[ImageManageController alloc] initWithStyle:UITableViewStylePlain];
+    manageController.managedObjectContext = self.managedObjectContext;
     
-    // If appropriate, configure the new managed object.
-    // Normally you should use accessor methods, but using KVC here avoids the need to add a custom class to the template.
-    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
+    UINavigationController *manageNavigator = [[UINavigationController alloc] initWithRootViewController:manageController];
     
-    // Save the context.
-    NSError *error = nil;
-    if (![context save:&error]) {
-         // Replace this implementation with code to handle the error appropriately.
-         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
+    [self presentModalViewController:manageNavigator animated:YES];
 }
 
 #pragma mark - Table View
@@ -97,12 +87,14 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
         [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
         
         NSError *error = nil;
-        if (![context save:&error]) {
+        if (![context save:&error])
+        {
              // Replace this implementation with code to handle the error appropriately.
              // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
@@ -119,44 +111,41 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (!self.detailViewController) {
-        self.detailViewController = [[DetailViewController alloc] initWithNibName:@"DetailViewController" bundle:nil];
-    }
-    NSManagedObject *object = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-    self.detailViewController.detailItem = object;
-    [self.navigationController pushViewController:self.detailViewController animated:YES];
+
 }
 
 #pragma mark - Fetched results controller
 
 - (NSFetchedResultsController *)fetchedResultsController
 {
-    if (_fetchedResultsController != nil) {
+    if (_fetchedResultsController != nil)
+    {
         return _fetchedResultsController;
     }
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ImageContent" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:NO];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"ImageCache"];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
 	NSError *error = nil;
-	if (![self.fetchedResultsController performFetch:&error]) {
+	if (![self.fetchedResultsController performFetch:&error])
+    {
 	     // Replace this implementation with code to handle the error appropriately.
 	     // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
 	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
@@ -174,7 +163,8 @@
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
 {
-    switch(type) {
+    switch(type)
+    {
         case NSFetchedResultsChangeInsert:
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
@@ -191,7 +181,8 @@
 {
     UITableView *tableView = self.tableView;
     
-    switch(type) {
+    switch(type)
+    {
         case NSFetchedResultsChangeInsert:
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
@@ -216,20 +207,10 @@
     [self.tableView endUpdates];
 }
 
-/*
-// Implementing the above methods to update the table view in response to individual changes may have performance implications if a large number of changes are made simultaneously. If this proves to be an issue, you can instead just implement controllerDidChangeContent: which notifies the delegate that all section and object changes have been processed. 
- 
- - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    // In the simplest, most efficient, case, reload the table view.
-    [self.tableView reloadData];
-}
- */
-
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [[object valueForKey:@"timeStamp"] description];
+    ImageContent *content = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    cell.textLabel.text = content.name;
 }
 
 @end

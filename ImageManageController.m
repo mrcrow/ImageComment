@@ -13,6 +13,7 @@
 @end
 
 @implementation ImageManageController
+@synthesize managedObjectContext = _managedObjectContext;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {

@@ -18,12 +18,13 @@
 		E853C3601683562A00BDC3F3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E853C35F1683562A00BDC3F3 /* Default@2x.png */; };
 		E853C3621683562A00BDC3F3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E853C3611683562A00BDC3F3 /* Default-568h@2x.png */; };
 		E853C3651683562A00BDC3F3 /* ImageComment.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E853C3631683562A00BDC3F3 /* ImageComment.xcdatamodeld */; };
-		E853C3681683562A00BDC3F3 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3671683562A00BDC3F3 /* MasterViewController.m */; };
-		E853C36E1683562B00BDC3F3 /* MasterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E853C36C1683562B00BDC3F3 /* MasterViewController.xib */; };
+		E853C3681683562A00BDC3F3 /* ImageListController.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3671683562A00BDC3F3 /* ImageListController.m */; };
+		E853C36E1683562B00BDC3F3 /* ImageListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E853C36C1683562B00BDC3F3 /* ImageListController.xib */; };
 		E853C37A1683566A00BDC3F3 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3781683566A00BDC3F3 /* ImageViewController.m */; };
 		E853C37B1683566A00BDC3F3 /* ImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E853C3791683566A00BDC3F3 /* ImageViewController.xib */; };
 		E853C37F1683578100BDC3F3 /* ImageManageController.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C37D1683578100BDC3F3 /* ImageManageController.m */; };
 		E853C3801683578100BDC3F3 /* ImageManageController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E853C37E1683578100BDC3F3 /* ImageManageController.xib */; };
+		E853C38816835E6600BDC3F3 /* ImageContent.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C38716835E6600BDC3F3 /* ImageContent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,15 +43,17 @@
 		E853C35F1683562A00BDC3F3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		E853C3611683562A00BDC3F3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		E853C3641683562A00BDC3F3 /* ImageComment.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageComment.xcdatamodel; sourceTree = "<group>"; };
-		E853C3661683562A00BDC3F3 /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
-		E853C3671683562A00BDC3F3 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
-		E853C36D1683562B00BDC3F3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MasterViewController.xib; sourceTree = "<group>"; };
+		E853C3661683562A00BDC3F3 /* ImageListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageListController.h; sourceTree = "<group>"; };
+		E853C3671683562A00BDC3F3 /* ImageListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageListController.m; sourceTree = "<group>"; };
+		E853C36D1683562B00BDC3F3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ImageListController.xib; sourceTree = "<group>"; };
 		E853C3771683566A00BDC3F3 /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageViewController.h; path = ../ImageViewController.h; sourceTree = "<group>"; };
 		E853C3781683566A00BDC3F3 /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageViewController.m; path = ../ImageViewController.m; sourceTree = "<group>"; };
 		E853C3791683566A00BDC3F3 /* ImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ImageViewController.xib; path = ../ImageViewController.xib; sourceTree = "<group>"; };
 		E853C37C1683578100BDC3F3 /* ImageManageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageManageController.h; path = ../ImageManageController.h; sourceTree = "<group>"; };
 		E853C37D1683578100BDC3F3 /* ImageManageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageManageController.m; path = ../ImageManageController.m; sourceTree = "<group>"; };
 		E853C37E1683578100BDC3F3 /* ImageManageController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ImageManageController.xib; path = ../ImageManageController.xib; sourceTree = "<group>"; };
+		E853C38616835E6600BDC3F3 /* ImageContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageContent.h; sourceTree = "<group>"; };
+		E853C38716835E6600BDC3F3 /* ImageContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageContent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,16 +104,16 @@
 			children = (
 				E853C35A1683562A00BDC3F3 /* AppDelegate.h */,
 				E853C35B1683562A00BDC3F3 /* AppDelegate.m */,
-				E853C3661683562A00BDC3F3 /* MasterViewController.h */,
-				E853C3671683562A00BDC3F3 /* MasterViewController.m */,
+				E853C3661683562A00BDC3F3 /* ImageListController.h */,
+				E853C3671683562A00BDC3F3 /* ImageListController.m */,
 				E853C37C1683578100BDC3F3 /* ImageManageController.h */,
 				E853C37D1683578100BDC3F3 /* ImageManageController.m */,
 				E853C3771683566A00BDC3F3 /* ImageViewController.h */,
 				E853C3781683566A00BDC3F3 /* ImageViewController.m */,
-				E853C36C1683562B00BDC3F3 /* MasterViewController.xib */,
+				E853C36C1683562B00BDC3F3 /* ImageListController.xib */,
 				E853C37E1683578100BDC3F3 /* ImageManageController.xib */,
 				E853C3791683566A00BDC3F3 /* ImageViewController.xib */,
-				E853C3631683562A00BDC3F3 /* ImageComment.xcdatamodeld */,
+				E853C38516835E4900BDC3F3 /* Data Modal */,
 				E853C3521683562A00BDC3F3 /* Supporting Files */,
 			);
 			path = ImageComment;
@@ -128,6 +131,16 @@
 				E853C3611683562A00BDC3F3 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E853C38516835E4900BDC3F3 /* Data Modal */ = {
+			isa = PBXGroup;
+			children = (
+				E853C3631683562A00BDC3F3 /* ImageComment.xcdatamodeld */,
+				E853C38616835E6600BDC3F3 /* ImageContent.h */,
+				E853C38716835E6600BDC3F3 /* ImageContent.m */,
+			);
+			name = "Data Modal";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -185,7 +198,7 @@
 				E853C35E1683562A00BDC3F3 /* Default.png in Resources */,
 				E853C3601683562A00BDC3F3 /* Default@2x.png in Resources */,
 				E853C3621683562A00BDC3F3 /* Default-568h@2x.png in Resources */,
-				E853C36E1683562B00BDC3F3 /* MasterViewController.xib in Resources */,
+				E853C36E1683562B00BDC3F3 /* ImageListController.xib in Resources */,
 				E853C37B1683566A00BDC3F3 /* ImageViewController.xib in Resources */,
 				E853C3801683578100BDC3F3 /* ImageManageController.xib in Resources */,
 			);
@@ -201,9 +214,10 @@
 				E853C3581683562A00BDC3F3 /* main.m in Sources */,
 				E853C35C1683562A00BDC3F3 /* AppDelegate.m in Sources */,
 				E853C3651683562A00BDC3F3 /* ImageComment.xcdatamodeld in Sources */,
-				E853C3681683562A00BDC3F3 /* MasterViewController.m in Sources */,
+				E853C3681683562A00BDC3F3 /* ImageListController.m in Sources */,
 				E853C37A1683566A00BDC3F3 /* ImageViewController.m in Sources */,
 				E853C37F1683578100BDC3F3 /* ImageManageController.m in Sources */,
+				E853C38816835E6600BDC3F3 /* ImageContent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,12 +232,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		E853C36C1683562B00BDC3F3 /* MasterViewController.xib */ = {
+		E853C36C1683562B00BDC3F3 /* ImageListController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				E853C36D1683562B00BDC3F3 /* en */,
 			);
-			name = MasterViewController.xib;
+			name = ImageListController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

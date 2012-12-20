@@ -8,11 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@class DetailViewController;
-
 #import <CoreData/CoreData.h>
 
-@interface MasterViewController : UITableViewController <NSFetchedResultsControllerDelegate>
+@interface ImageListController : UITableViewController <NSFetchedResultsControllerDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
