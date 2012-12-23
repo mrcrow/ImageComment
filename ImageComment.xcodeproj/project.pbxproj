@@ -21,21 +21,21 @@
 		E853C3681683562A00BDC3F3 /* ImageListController.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3671683562A00BDC3F3 /* ImageListController.m */; };
 		E853C36E1683562B00BDC3F3 /* ImageListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E853C36C1683562B00BDC3F3 /* ImageListController.xib */; };
 		E853C3A2168414EB00BDC3F3 /* ImageManageController.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C38A16836C4700BDC3F3 /* ImageManageController.m */; };
-		E853C3A3168414EB00BDC3F3 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C38D16836C4800BDC3F3 /* ImageViewController.m */; };
+		E853C3A3168414EB00BDC3F3 /* ImageContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C38D16836C4800BDC3F3 /* ImageContentController.m */; };
 		E853C3A4168414EB00BDC3F3 /* ImageContent.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C39016836C6000BDC3F3 /* ImageContent.m */; };
 		E853C3AC16841DC700BDC3F3 /* LocationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3AA16841DC600BDC3F3 /* LocationViewController.m */; };
 		E853C3AD16841DC700BDC3F3 /* LocationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E853C3AB16841DC700BDC3F3 /* LocationViewController.xib */; };
 		E853C3AF16841FB200BDC3F3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E853C3AE16841FB200BDC3F3 /* MapKit.framework */; };
 		E853C3B11684C47200BDC3F3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E853C3B01684C47100BDC3F3 /* CoreLocation.framework */; };
-		E853C3C6168574E600BDC3F3 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3BC1685747B00BDC3F3 /* AbstractActionSheetPicker.m */; };
-		E853C3C7168574E600BDC3F3 /* ActionSheetDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3BE1685747B00BDC3F3 /* ActionSheetDatePicker.m */; };
-		E853C3C8168574E600BDC3F3 /* ActionSheetDistancePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3C01685747B00BDC3F3 /* ActionSheetDistancePicker.m */; };
-		E853C3C9168574E600BDC3F3 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3C31685747B00BDC3F3 /* ActionSheetStringPicker.m */; };
-		E853C3CA168574E600BDC3F3 /* DistancePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3C51685747B00BDC3F3 /* DistancePickerView.m */; };
-		E853C3CB168574E600BDC3F3 /* PopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3BA1685746D00BDC3F3 /* PopoverView.m */; };
+		E853C3C6168574E600BDC3F3 /* AbstractActionSheetPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3BC1685747B00BDC3F3 /* AbstractActionSheetPicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E853C3C7168574E600BDC3F3 /* ActionSheetDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3BE1685747B00BDC3F3 /* ActionSheetDatePicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E853C3C8168574E600BDC3F3 /* ActionSheetDistancePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3C01685747B00BDC3F3 /* ActionSheetDistancePicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E853C3C9168574E600BDC3F3 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3C31685747B00BDC3F3 /* ActionSheetStringPicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E853C3CA168574E600BDC3F3 /* DistancePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3C51685747B00BDC3F3 /* DistancePickerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E853C3CB168574E600BDC3F3 /* PopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3BA1685746D00BDC3F3 /* PopoverView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E853C3CE1685759600BDC3F3 /* success.png in Resources */ = {isa = PBXBuildFile; fileRef = E853C3CC1685759600BDC3F3 /* success.png */; };
 		E853C3CF1685759600BDC3F3 /* success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E853C3CD1685759600BDC3F3 /* success@2x.png */; };
-		E853C48E1686B5E700BDC3F3 /* PlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C48D1686B5E700BDC3F3 /* PlaceHolderTextView.m */; };
+		E853C48E1686B5E700BDC3F3 /* PlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C48D1686B5E700BDC3F3 /* PlaceHolderTextView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,9 +60,9 @@
 		E853C38916836C4700BDC3F3 /* ImageManageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageManageController.h; sourceTree = "<group>"; };
 		E853C38A16836C4700BDC3F3 /* ImageManageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageManageController.m; sourceTree = "<group>"; };
 		E853C38B16836C4800BDC3F3 /* ImageManageController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageManageController.xib; sourceTree = "<group>"; };
-		E853C38C16836C4800BDC3F3 /* ImageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
-		E853C38D16836C4800BDC3F3 /* ImageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
-		E853C38E16836C4800BDC3F3 /* ImageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageViewController.xib; sourceTree = "<group>"; };
+		E853C38C16836C4800BDC3F3 /* ImageContentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageContentController.h; sourceTree = "<group>"; };
+		E853C38D16836C4800BDC3F3 /* ImageContentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageContentController.m; sourceTree = "<group>"; };
+		E853C38E16836C4800BDC3F3 /* ImageContentController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageContentController.xib; sourceTree = "<group>"; };
 		E853C38F16836C6000BDC3F3 /* ImageContent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ImageContent.h; path = "Data Modal/ImageContent.h"; sourceTree = "<group>"; };
 		E853C39016836C6000BDC3F3 /* ImageContent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ImageContent.m; path = "Data Modal/ImageContent.m"; sourceTree = "<group>"; };
 		E853C3A916841DC500BDC3F3 /* LocationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationViewController.h; sourceTree = "<group>"; };
@@ -197,9 +197,9 @@
 		E853C3B316856D2A00BDC3F3 /* Show Image Comment */ = {
 			isa = PBXGroup;
 			children = (
-				E853C38C16836C4800BDC3F3 /* ImageViewController.h */,
-				E853C38D16836C4800BDC3F3 /* ImageViewController.m */,
-				E853C38E16836C4800BDC3F3 /* ImageViewController.xib */,
+				E853C38C16836C4800BDC3F3 /* ImageContentController.h */,
+				E853C38D16836C4800BDC3F3 /* ImageContentController.m */,
+				E853C38E16836C4800BDC3F3 /* ImageContentController.xib */,
 			);
 			name = "Show Image Comment";
 			sourceTree = "<group>";
@@ -304,7 +304,7 @@
 				E853C3CA168574E600BDC3F3 /* DistancePickerView.m in Sources */,
 				E853C3CB168574E600BDC3F3 /* PopoverView.m in Sources */,
 				E853C3A2168414EB00BDC3F3 /* ImageManageController.m in Sources */,
-				E853C3A3168414EB00BDC3F3 /* ImageViewController.m in Sources */,
+				E853C3A3168414EB00BDC3F3 /* ImageContentController.m in Sources */,
 				E853C3A4168414EB00BDC3F3 /* ImageContent.m in Sources */,
 				E853C3581683562A00BDC3F3 /* main.m in Sources */,
 				E853C35C1683562A00BDC3F3 /* AppDelegate.m in Sources */,

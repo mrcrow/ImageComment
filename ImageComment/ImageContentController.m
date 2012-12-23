@@ -6,13 +6,13 @@
 //  Copyright (c) 2012年 Wu Wenzhi. All rights reserved.
 //
 
-#import "ImageViewController.h"
+#import "ImageContentController.h"
 
-@interface ImageViewController ()
+@interface ImageContentController ()
 @property (strong, nonatomic) ImageContent *content;
 @end
 
-@implementation ImageViewController
+@implementation ImageContentController
 @synthesize content = _content;
 
 - (id)initWithStyle:(UITableViewStyle)style

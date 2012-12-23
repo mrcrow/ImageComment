@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ImageContent.h"
 
-@interface ImageViewController : UITableViewController
+@interface ImageContentController : UITableViewController
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
