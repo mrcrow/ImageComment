@@ -7,13 +7,19 @@
 //
 
 #import "ImageManageController.h"
+#import "ColorExtention.h"
 
 @interface ImageManageController ()
-
+@property (strong, nonatomic) UITextField *nameField;
+@property (strong, nonatomic) UITextField *locationField;
+@property (strong, nonatomic) UITextView *commentView;
+@property (strong, nonatomic) UIImageView *imageView;
+@property (strong, nonatomic) NSData *imageData;
 @end
 
 @implementation ImageManageController
-@synthesize managedObjectContext = _managedObjectContext;
+@synthesize managedObjectContext = _managedObjectContext, locationController = _locationController;
+@synthesize nameField = _nameField, locationField = _locationField, commentView = _commentView;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -27,12 +33,31 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
+    self.navigationItem.leftBarButtonItem = cancelButton;
+    self.navigationItem.rightBarButtonItem = doneButton;
+}
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+- (void)cance
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)done
+{
+    
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    [self setLocationController:nil];
+    [self setManagedObjectContext:nil];
+    [self setNameField:nil];
+    [self setLocationField:nil];
+    [self setCommentView:nil];
+    [self setImageView:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,81 +70,84 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    NSArray *counts = [NSArray arrayWithObjects:
+                       [NSNumber numberWithInt:1],      //Name
+                       [NSNumber numberWithInt:1],      //Image
+                       [NSNumber numberWithInt:1],      //Comment
+                       [NSNumber numberWithInt:1],      //Location
+                       nil];
+    return [[counts objectAtIndex:section] integerValue];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    NSInteger section = indexPath.section;
+    switch (section)
+    {
+        case 0: return [self cellForImageName];
+        case 1: return [self cellForImageView];
+        case 2: return [self cellForImageComment];
+        case 3: return [self cellForImageLocation];
+        default: return nil;
+    }
+}
+
+#pragma mark - Table Cells
+
+- (UITableViewCell *)cellForImageName
+{
+    static NSString *cellID = @"NameCell";
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    if (!self.nameField)
+    {
+        self.nameField = [[UITextField alloc] initWithFrame:CGRectMake(20, 8, 285, 30)];
+        _nameField.delegate = self;
+        _nameField.textAlignment = UITextAlignmentLeft;
+        _nameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        _nameField.placeholder = @"Name";
+        _nameField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        _nameField.textColor = [UIColor tableViewCellTextBlueColor];
+        [_nameField setReturnKeyType:UIReturnKeyDone];
+        [_nameField addTarget:self action:@selector(textFieldFinished:) forControlEvents:UIControlEventEditingDidEndOnExit];
     }
     
-    // Configure the cell...
+    [cell addSubview:self.nameField];
     
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)cellForImageView
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    if (!self.imageView)
+    {
+        CGFloat cellWidth = self.view.bounds.size.width - 20;
+        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, cellWidth, 431.25)];
+        
+    }
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)cellForImageComment
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    return nil;
 }
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+- (UITableViewCell *)cellForImageLocation
 {
+    return nil;
 }
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    
 }
 
 @end

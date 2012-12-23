@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "ImageContent.h"
+#import "LocationViewController.h"
 
-@interface ImageManageController : UITableViewController
+@interface ImageManageController : UITableViewController <UITextFieldDelegate, UITextViewDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) LocationViewController *locationController;
 
 @end
