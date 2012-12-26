@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "ImageContent.h"
-#import "LocationViewController.h"
+#import "ImageLocationController.h"
+#import "ImageViewController.h"
 
 @interface ImageManageController : UITableViewController <UITextFieldDelegate, UITextViewDelegate>
 
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (strong, nonatomic) LocationViewController *locationController;
+@property (strong, nonatomic) NSManagedObjectContext    *managedObjectContext;
+@property (strong, nonatomic) ImageLocationController   *locationController;
+@property (strong, nonatomic) ImageViewController       *imageController;
 
 @end

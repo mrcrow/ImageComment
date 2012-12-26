@@ -6,14 +6,14 @@
 //  Copyright (c) 2012年 Wu Wenzhi. All rights reserved.
 //
 
-#import "LocationViewController.h"
+#import "ImageLocationController.h"
 
-@interface LocationViewController ()
+@interface ImageLocationController ()
 @property NSMutableArray *location;
 @end
 
-@implementation LocationViewController
-@synthesize location = _location;
+@implementation ImageLocationController
+@synthesize location = _location, centerTarget;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,12 +41,13 @@
 - (void)viewDidUnload {
     [self setMapView:nil];
     [self setLocation:nil];
+    [self setCenterTarget:nil];
     [super viewDidUnload];
 }
 
 #pragma mark - Buttons Methods
 
-#define MapTypeArray [NSArray arrayWithObjects:@"Standard", @"Satellite", @"Hybrid", nil]
+#define MapTypeArray [NSArray arrayWithObjects:@"Standard Map", @"Satellite Map", @"Hybrid Map", nil]
 
 - (void)setupController
 {
@@ -60,6 +61,10 @@
     self.toolbarItems = [NSArray arrayWithObjects:trackingButton, space, locateButton, space, typeButton, nil];
     
     _location = [NSMutableArray array];
+    
+    centerTarget = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"target"]];
+    centerTarget.contentMode = UIViewContentModeScaleAspectFit;
+    centerTarget.center = self.mapView.center;
 }
 
 - (void)addPinToMap
@@ -88,7 +93,7 @@
     [popoverView showImage:[UIImage imageNamed:@"success"] withMessage:string];
     
     [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationDuration:1.5];
     [UIView setAnimationTransition:UIViewAnimationTransitionCurlUp forView:self.mapView cache:YES];
     [UIView commitAnimations];
     

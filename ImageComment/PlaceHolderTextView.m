@@ -92,7 +92,6 @@
     _shouldDrawPlaceholder = NO;
 }
 
-
 - (void)_updateShouldDrawPlaceholder {
     BOOL prev = _shouldDrawPlaceholder;
     _shouldDrawPlaceholder = self.placeholder && self.placeholderColor && self.text.length == 0;

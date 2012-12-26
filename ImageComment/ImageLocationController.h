@@ -11,7 +11,9 @@
 #import <CoreLocation/CoreLocation.h>
 #import "PopoverView.h"
 
-@interface LocationViewController : UIViewController <PopoverViewDelegate>
+@interface ImageLocationController : UIViewController <PopoverViewDelegate>
 
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet MKMapView  *mapView;
+@property (strong, nonatomic) UIImageView       *centerTarget;
+
 @end
