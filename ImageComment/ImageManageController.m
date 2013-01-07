@@ -40,7 +40,7 @@
 {
     [super viewDidLoad];
     [self setupButtons];
-    [self createImageContent];
+    //[self createImageContent];
 }
 
 - (void)viewDidUnload
@@ -62,7 +62,7 @@
 }
 
 #pragma mark - Create ImageContent Object
-
+/*
 - (void)createImageContent
 {
     NSManagedObjectContext *context = self.managedObjectContext;
@@ -80,36 +80,19 @@
     
     self.content = imageContent;
 }
-
+*/
 #pragma mark - Button functions
 
 - (void)setupButtons
 {
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
-    self.navigationItem.leftBarButtonItem = cancelButton;
     self.navigationItem.rightBarButtonItem = doneButton;
-}
-
-- (void)cancel
-{
-    [self.managedObjectContext deleteObject:self.content];
-    
-    NSError *error = nil;
-    if (![self.managedObjectContext save:&error])
-    {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    
-    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)done
 {
-    [self dismissModalViewControllerAnimated:YES];
+#warning check name 
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Table view data source
@@ -225,6 +208,7 @@
         [_nameField addTarget:self action:@selector(textFieldFinished:) forControlEvents:UIControlEventEditingDidEndOnExit];
     }
     
+    _nameField.text = _content.name;
     [cell addSubview:self.nameField];
     
     return cell;
@@ -282,6 +266,8 @@
         
         [cell addSubview:self.commentView];
     }
+    
+    _commentView.text = self.content.imageComment;
     
     return cell;
 }

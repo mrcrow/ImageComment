@@ -43,14 +43,24 @@
 
 - (void)insertImageContent:(id)sender
 {
-    ImageManageController *manageController = [[ImageManageController alloc] initWithStyle:UITableViewStylePlain];
+    NSManagedObjectContext *context = self.managedObjectContext;
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ImageContent" inManagedObjectContext:context];
+    ImageContent *imageContent = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    
+    ImageManageController *manageController = [[ImageManageController alloc] initWithStyle:UITableViewStyleGrouped];
     manageController.managedObjectContext = self.managedObjectContext;
+    manageController.content = imageContent;
+
+    NSError *error = nil;
+    if (![context save:&error])
+    {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
     
-    
-    
-    UINavigationController *manageNavigator = [[UINavigationController alloc] initWithRootViewController:manageController];
-    
-    [self presentModalViewController:manageNavigator animated:YES];
+    [self.navigationController pushViewController:manageController animated:YES];
 }
 
 #pragma mark - Table View
@@ -211,8 +221,13 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    ImageContent *content = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = content.name;
+    ImageContent *imageContent = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    ImageManageController *manageController = [[ImageManageController alloc] initWithStyle:UITableViewStyleGrouped];
+    manageController.managedObjectContext = self.managedObjectContext;
+    manageController.content = imageContent;
+    
+    [self.navigationController pushViewController:manageController animated:YES];
 }
 
 @end
