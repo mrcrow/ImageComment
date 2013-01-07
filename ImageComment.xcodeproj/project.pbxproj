@@ -22,7 +22,6 @@
 		E853C36E1683562B00BDC3F3 /* ImageListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E853C36C1683562B00BDC3F3 /* ImageListController.xib */; };
 		E853C3A2168414EB00BDC3F3 /* ImageManageController.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C38A16836C4700BDC3F3 /* ImageManageController.m */; };
 		E853C3A3168414EB00BDC3F3 /* ListContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C38D16836C4800BDC3F3 /* ListContentController.m */; };
-		E853C3A4168414EB00BDC3F3 /* ImageContent.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C39016836C6000BDC3F3 /* ImageContent.m */; };
 		E853C3AC16841DC700BDC3F3 /* ImageLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3AA16841DC600BDC3F3 /* ImageLocationController.m */; };
 		E853C3AD16841DC700BDC3F3 /* ImageLocationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E853C3AB16841DC700BDC3F3 /* ImageLocationController.xib */; };
 		E853C3AF16841FB200BDC3F3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E853C3AE16841FB200BDC3F3 /* MapKit.framework */; };
@@ -41,6 +40,7 @@
 		E86AEF71168A072D002234FE /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E86AEF6F168A072D002234FE /* ImageViewController.m */; };
 		E86AEF72168A072D002234FE /* ImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E86AEF70168A072D002234FE /* ImageViewController.xib */; };
 		E86AEF7C168B5EC6002234FE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E86AEF7B168B5EC6002234FE /* QuartzCore.framework */; };
+		E8EBD0B7169ABB26000D118F /* ImageContent.m in Sources */ = {isa = PBXBuildFile; fileRef = E8EBD0B6169ABB26000D118F /* ImageContent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,8 +68,6 @@
 		E853C38C16836C4800BDC3F3 /* ListContentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListContentController.h; sourceTree = "<group>"; };
 		E853C38D16836C4800BDC3F3 /* ListContentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListContentController.m; sourceTree = "<group>"; };
 		E853C38E16836C4800BDC3F3 /* ListContentController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListContentController.xib; sourceTree = "<group>"; };
-		E853C38F16836C6000BDC3F3 /* ImageContent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ImageContent.h; path = "Data Modal/ImageContent.h"; sourceTree = "<group>"; };
-		E853C39016836C6000BDC3F3 /* ImageContent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ImageContent.m; path = "Data Modal/ImageContent.m"; sourceTree = "<group>"; };
 		E853C3A916841DC500BDC3F3 /* ImageLocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageLocationController.h; sourceTree = "<group>"; };
 		E853C3AA16841DC600BDC3F3 /* ImageLocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageLocationController.m; sourceTree = "<group>"; };
 		E853C3AB16841DC700BDC3F3 /* ImageLocationController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageLocationController.xib; sourceTree = "<group>"; };
@@ -100,6 +98,8 @@
 		E86AEF6F168A072D002234FE /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
 		E86AEF70168A072D002234FE /* ImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageViewController.xib; sourceTree = "<group>"; };
 		E86AEF7B168B5EC6002234FE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E8EBD0B5169ABB26000D118F /* ImageContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageContent.h; sourceTree = "<group>"; };
+		E8EBD0B6169ABB26000D118F /* ImageContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageContent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,9 +189,9 @@
 		E853C38516835E4900BDC3F3 /* Data Modal */ = {
 			isa = PBXGroup;
 			children = (
-				E853C38F16836C6000BDC3F3 /* ImageContent.h */,
-				E853C39016836C6000BDC3F3 /* ImageContent.m */,
 				E853C3631683562A00BDC3F3 /* ImageComment.xcdatamodeld */,
+				E8EBD0B5169ABB26000D118F /* ImageContent.h */,
+				E8EBD0B6169ABB26000D118F /* ImageContent.m */,
 			);
 			name = "Data Modal";
 			sourceTree = "<group>";
@@ -326,7 +326,6 @@
 				E853C3CB168574E600BDC3F3 /* PopoverView.m in Sources */,
 				E853C3A2168414EB00BDC3F3 /* ImageManageController.m in Sources */,
 				E853C3A3168414EB00BDC3F3 /* ListContentController.m in Sources */,
-				E853C3A4168414EB00BDC3F3 /* ImageContent.m in Sources */,
 				E853C3581683562A00BDC3F3 /* main.m in Sources */,
 				E853C35C1683562A00BDC3F3 /* AppDelegate.m in Sources */,
 				E853C3651683562A00BDC3F3 /* ImageComment.xcdatamodeld in Sources */,
@@ -334,6 +333,7 @@
 				E853C3AC16841DC700BDC3F3 /* ImageLocationController.m in Sources */,
 				E853C48E1686B5E700BDC3F3 /* PlaceHolderTextView.m in Sources */,
 				E86AEF71168A072D002234FE /* ImageViewController.m in Sources */,
+				E8EBD0B7169ABB26000D118F /* ImageContent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,6 +14,7 @@
 
 @implementation ImageLocationController
 @synthesize location = _location, centerTarget;
+@synthesize delegate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,6 +42,7 @@
 - (void)viewDidUnload {
     [self setMapView:nil];
     [self setLocation:nil];
+    [self setDelegate:nil];
     [self setCenterTarget:nil];
     [super viewDidUnload];
 }

@@ -20,7 +20,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"Content", @"Image Lists");
+        self.title = NSLocalizedString(@"Images", @"Image Lists");
     }
     return self;
 }
@@ -45,6 +45,8 @@
 {
     ImageManageController *manageController = [[ImageManageController alloc] initWithStyle:UITableViewStylePlain];
     manageController.managedObjectContext = self.managedObjectContext;
+    
+    
     
     UINavigationController *manageNavigator = [[UINavigationController alloc] initWithRootViewController:manageController];
     

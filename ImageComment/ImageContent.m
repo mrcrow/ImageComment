@@ -2,8 +2,8 @@
 //  ImageContent.m
 //  ImageComment
 //
-//  Created by Wu Wenzhi on 12-12-20.
-//  Copyright (c) 2012年 Wu Wenzhi. All rights reserved.
+//  Created by Wu Wenzhi on 13-1-7.
+//  Copyright (c) 2013年 Wu Wenzhi. All rights reserved.
 //
 
 #import "ImageContent.h"
@@ -11,12 +11,13 @@
 
 @implementation ImageContent
 
+@dynamic imageComment;
 @dynamic date;
-@dynamic name;
 @dynamic image;
 @dynamic latitude;
 @dynamic longitude;
-@dynamic comment;
-@dynamic address;
+@dynamic name;
+@dynamic hasImage;
+@dynamic imageID;
 
 @end
