@@ -9,12 +9,13 @@
 #import "ImageLocationController.h"
 
 @interface ImageLocationController ()
-@property NSMutableArray *location;
+@property (strong, nonatomic) NSMutableArray *userAnnotation;
 @end
 
 @implementation ImageLocationController
-@synthesize location = _location, centerTarget;
+@synthesize centerTarget;
 @synthesize delegate;
+@synthesize userAnnotation = _userAnnotation;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,7 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setupController];
+    [self setupButtons];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -41,7 +42,6 @@
 
 - (void)viewDidUnload {
     [self setMapView:nil];
-    [self setLocation:nil];
     [self setDelegate:nil];
     [self setCenterTarget:nil];
     [super viewDidUnload];
@@ -51,7 +51,7 @@
 
 #define MapTypeArray [NSArray arrayWithObjects:@"Standard Map", @"Satellite Map", @"Hybrid Map", nil]
 
-- (void)setupController
+- (void)setupButtons
 {
     MKUserTrackingBarButtonItem *trackingButton = [[MKUserTrackingBarButtonItem alloc] initWithMapView:self.mapView];
     UIBarButtonItem *locateButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPinToMap)];
@@ -61,27 +61,59 @@
     
     self.navigationItem.rightBarButtonItem = doneButton;
     self.toolbarItems = [NSArray arrayWithObjects:trackingButton, space, locateButton, space, typeButton, nil];
-    
-    _location = [NSMutableArray array];
-    
-    centerTarget = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"target"]];
-    centerTarget.contentMode = UIViewContentModeScaleAspectFit;
-    centerTarget.center = self.mapView.center;
 }
 
 - (void)addPinToMap
 {
+    [self clearAnnotationContainer];
     
+    CLLocationCoordinate2D coord = [self.mapView centerCoordinate];
+    MKPointAnnotation *annot = [[MKPointAnnotation alloc] init];
+    annot.title = @"Image Location";
+    annot.coordinate = coord;
+    annot.subtitle = [NSString stringWithFormat:@"φ:%.4f, λ:%.4f", annot.coordinate.latitude, annot.coordinate.longitude];
+    
+    [self.mapView addAnnotation:annot];
+    [_userAnnotation addObject:annot];
+}
+
+- (void)clearAnnotationContainer
+{
+    if ([_userAnnotation count] != 0)
+    {
+        [self.mapView removeAnnotations:_userAnnotation];
+        [_userAnnotation removeAllObjects];
+    }
+    else
+    {
+        _userAnnotation = [NSMutableArray array];
+    }
 }
 
 - (void)finishLocating
 {
+    if ([_userAnnotation count] != 0)
+    {
+        MKPointAnnotation *location = [_userAnnotation lastObject];
+        [delegate imageLocationController:self receiveImageLocation:location.coordinate];
+    }
     
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)showMapTypePop
 {
    [PopoverView showPopoverAtPoint:CGPointMake(330.0, 370.0) inView:self.mapView withTitle:@"MapType" withStringArray:MapTypeArray delegate:self];
+}
+
+#pragma mark - Center Target
+
+- (void)setupTargetAndAnnotationContainer
+{
+    centerTarget = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"target"]];
+    centerTarget.contentMode = UIViewContentModeScaleAspectFit;
+    centerTarget.center = self.mapView.center;
+    self.userAnnotation = [NSMutableArray array];
 }
 
 #pragma mark - Popover View Delegate Method
