@@ -31,6 +31,7 @@
 {
     [super viewDidLoad];
     [self setupButtons];
+    [self setupTargetAndAnnotationContainer];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -45,6 +46,22 @@
     [self setDelegate:nil];
     [self setCenterTarget:nil];
     [super viewDidUnload];
+}
+
+#pragma mark - View Location Coordinate
+
+- (void)viewLicationCoordinate:(CLLocationCoordinate2D)coordinate
+{
+    [self.mapView setCenterCoordinate:coordinate];
+    
+    [self clearAnnotationContainer];
+    MKPointAnnotation *annot = [[MKPointAnnotation alloc] init];
+    annot.title = @"Image Location";
+    annot.coordinate = coordinate;
+    annot.subtitle = [NSString stringWithFormat:@"φ:%.4f, λ:%.4f", annot.coordinate.latitude, annot.coordinate.longitude];
+    
+    [self.mapView addAnnotation:annot];
+    [_userAnnotation addObject:annot];
 }
 
 #pragma mark - Buttons Methods
@@ -98,7 +115,7 @@
         [delegate imageLocationController:self receiveImageLocation:location.coordinate];
     }
     
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)showMapTypePop

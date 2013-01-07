@@ -20,6 +20,8 @@
 
 @property (weak, nonatomic) id <ImageLocationControllerDelegate> delegate;
 
+- (void)viewLicationCoordinate:(CLLocationCoordinate2D)coordinate;
+
 @end
 
 @protocol ImageLocationControllerDelegate

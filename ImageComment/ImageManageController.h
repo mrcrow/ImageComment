@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 #import "ImageContent.h"
 #import "ImageLocationController.h"
 #import "ImageViewController.h"
 
-@interface ImageManageController : UITableViewController <UITextFieldDelegate, UITextViewDelegate, ImageLocationControllerDelegate>
+@interface ImageManageController : UITableViewController <UITextFieldDelegate, UITextViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ImageLocationControllerDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext    *managedObjectContext;
 @property (strong, nonatomic) ImageLocationController   *locationController;

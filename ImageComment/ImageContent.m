@@ -19,5 +19,6 @@
 @dynamic name;
 @dynamic hasImage;
 @dynamic imageID;
+@dynamic hasLocation;
 
 @end

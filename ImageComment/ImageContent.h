@@ -20,5 +20,6 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSNumber * hasImage;
 @property (nonatomic, retain) NSString * imageID;
+@property (nonatomic, retain) NSNumber * hasLocation;
 
 @end

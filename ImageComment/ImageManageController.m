@@ -13,16 +13,18 @@
 #define COMMENT_CELL_HEIGHT 200.0
 
 @interface ImageManageController ()
-@property (strong, nonatomic) UITextField   *nameField;
-@property (strong, nonatomic) UILabel       *locationLabel;
-@property (strong, nonatomic) UITextView    *commentView;
-@property (strong, nonatomic) NSData        *imageData;
+@property (strong, nonatomic)   UITextField     *nameField;
+@property (strong, nonatomic)   UILabel         *locationLabel;
+@property (strong, nonatomic)   UITextView      *commentView;
+@property (strong, nonatomic)   NSData          *imageData;
+@property                       BOOL            newMedia;
 @end
 
 @implementation ImageManageController
 @synthesize managedObjectContext = _managedObjectContext, locationController = _locationController;
 @synthesize nameField = _nameField, locationLabel = _locationLabel, commentView = _commentView;
 @synthesize content = _content;
+@synthesize newMedia;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -165,20 +167,34 @@
         if ([_content.hasImage boolValue])
         {
             //preview image
+            
         }
         else
         {
             //camera or image roll
+            UIActionSheet *selectionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Select from camera roll", @"Take a photo", nil];
+            [selectionSheet showInView:self.view];
         }
     }
     
     if (indexPath.section == 2)
     {
+        //push location view 
         if (!self.locationController)
         {
             self.locationController = [[ImageLocationController alloc] initWithNibName:@"ImageLocationController" bundle:nil];
             _locationController.delegate = self;
         }
+    
+        if ([_content.hasLocation boolValue])
+        {
+            CLLocationDegrees latitude = [_content.latitude doubleValue];
+            CLLocationDegrees longitude = [_content.longitude doubleValue];
+            
+            [_locationController viewLicationCoordinate:CLLocationCoordinate2DMake(latitude, longitude)];
+        }
+
+        [self presentModalViewController:_locationController animated:YES];
     }
 }
 
@@ -228,19 +244,18 @@
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+        cell.accessoryType =  UITableViewCellAccessoryNone;
     }
     
     if ([_content.hasImage boolValue])
     {
         cell.imageView.image = [UIImage imageWithData:_imageData];
-        cell.accessoryType =  UITableViewCellAccessoryDisclosureIndicator;
     }
     else
     {
         cell.textLabel.text = @"Take a Photo";
         cell.textLabel.textAlignment = UITextAlignmentCenter;
         cell.textLabel.font = [UIFont systemFontOfSize:17];
-        cell.accessoryType =  UITableViewCellAccessoryNone;
     }
     
     return cell;
@@ -293,6 +308,104 @@
     _locationLabel.numberOfLines = 2;
     
     return cell;
+}
+
+#pragma mark - Image Selection ActionSheet Delegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex)
+    {
+        case 0: {
+            [self useCameraRoll];
+        } break;
+            
+        case 1: {
+            [self useCamera];
+        } break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)useCamera
+{
+    if ([UIImagePickerController isSourceTypeAvailable:
+         UIImagePickerControllerSourceTypeCamera])
+    {
+        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+        imagePicker.delegate = self;
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        imagePicker.mediaTypes = [NSArray arrayWithObjects:(NSString *)kUTTypeImage, nil];
+        imagePicker.allowsEditing = NO;
+        [self presentModalViewController:imagePicker animated:YES];
+        
+        newMedia = YES;
+    }
+}
+
+- (void)useCameraRoll
+{
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum])
+    {
+        UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+        imagePicker.delegate = self;
+        imagePicker.sourceType =
+        UIImagePickerControllerSourceTypePhotoLibrary;
+        imagePicker.mediaTypes = [NSArray arrayWithObjects:(NSString *) kUTTypeImage, nil];
+        imagePicker.allowsEditing = NO;
+        [self presentModalViewController:imagePicker animated:YES];
+        newMedia = NO;
+    }
+}
+
+-(void)imagePickerController:(UIImagePickerController *)picker
+didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
+    
+    [self dismissModalViewControllerAnimated:YES];
+    
+    if ([mediaType isEqualToString:(NSString *)kUTTypeImage])
+    {
+        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        
+        _content.image = UIImagePNGRepresentation(image);
+        
+        if (newMedia)
+            UIImageWriteToSavedPhotosAlbum(image,
+                                           self,
+                                           @selector(image:finishedSavingWithError:contextInfo:),
+                                           nil);
+    }
+    
+    NSError *error = nil;
+    if (![self.managedObjectContext save:&error])
+    {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+}
+
+#pragma mark - Image Location Controller Delegate
+
+- (void)imageLocationController:(ImageLocationController *)controller receiveImageLocation:(CLLocationCoordinate2D)coordinate
+{
+    _content.hasLocation = [NSNumber numberWithBool:YES];
+    _content.latitude = [NSNumber numberWithDouble:coordinate.latitude];
+    _content.longitude = [NSNumber numberWithDouble:coordinate.longitude];
+    
+    NSError *error = nil;
+    if (![self.managedObjectContext save:&error])
+    {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
 }
 
 @end
