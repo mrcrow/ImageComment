@@ -60,7 +60,12 @@
         abort();
     }
     
-    [self.navigationController pushViewController:manageController animated:YES];
+    manageController.previewMode = NO;
+    [manageController initialzeViewButtons];
+    
+    UINavigationController *addImageNavigator = [[UINavigationController alloc] initWithRootViewController:manageController];
+    
+    [self presentModalViewController:addImageNavigator animated:YES];
 }
 
 #pragma mark - Table View
@@ -121,9 +126,28 @@
     return NO;
 }
 
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    ImageContent *imageContent = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    if ([imageContent.hasImage boolValue])
+    {
+        cell.imageView.image = [UIImage imageWithData:imageContent.image];
+    }
+    cell.textLabel.text = imageContent.name;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    ImageContent *imageContent = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    
+    ImageManageController *manageController = [[ImageManageController alloc] initWithStyle:UITableViewStyleGrouped];
+    manageController.managedObjectContext = self.managedObjectContext;
+    manageController.content = imageContent;
+    
+    manageController.previewMode = YES;
+    [manageController initialzeViewButtons];
+    [self.navigationController pushViewController:manageController animated:YES];
 }
 
 #pragma mark - Fetched results controller
@@ -219,15 +243,5 @@
     [self.tableView endUpdates];
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-    ImageContent *imageContent = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    ImageManageController *manageController = [[ImageManageController alloc] initWithStyle:UITableViewStyleGrouped];
-    manageController.managedObjectContext = self.managedObjectContext;
-    manageController.content = imageContent;
-    
-    [self.navigationController pushViewController:manageController animated:YES];
-}
 
 @end

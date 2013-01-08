@@ -9,8 +9,7 @@
 #import "ImageManageController.h"
 #import "ColorExtention.h"
        
-#define IMAGE_CELL_HEIGHT   self.view.bounds.size.height / 2.5
-#define COMMENT_CELL_HEIGHT 200.0
+#define BIG_CELL_HEIGHT 200.0
 
 @interface ImageManageController ()
 @property (strong, nonatomic)   UITextField     *nameField;
@@ -18,13 +17,17 @@
 @property (strong, nonatomic)   UITextView      *commentView;
 @property (strong, nonatomic)   NSData          *imageData;
 @property                       BOOL            newMedia;
+
+@property (strong, nonatomic)   UIActionSheet   *imageSelectionSheet;
+@property (strong, nonatomic)   UIActionSheet   *cancelActionSheet;
 @end
 
 @implementation ImageManageController
 @synthesize managedObjectContext = _managedObjectContext, locationController = _locationController;
 @synthesize nameField = _nameField, locationLabel = _locationLabel, commentView = _commentView;
 @synthesize content = _content;
-@synthesize newMedia;
+@synthesize newMedia, previewMode;
+@synthesize imageSelectionSheet = _imageSelectionSheet, cancelActionSheet = _cancelActionSheet;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -39,8 +42,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setupButtons];
-    //[self createImageContent];
 }
 
 - (void)viewDidUnload
@@ -52,6 +53,8 @@
     [self setNameField:nil];
     [self setLocationLabel:nil];
     [self setCommentView:nil];
+    [self setImageSelectionSheet:nil];
+    [self setCancelActionSheet:nil];
     [self setContent:nil];
 }
 
@@ -61,38 +64,69 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Create ImageContent Object
-/*
-- (void)createImageContent
-{
-    NSManagedObjectContext *context = self.managedObjectContext;
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ImageContent" inManagedObjectContext:context];
-    ImageContent *imageContent = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-    
-    NSError *error = nil;
-    if (![context save:&error])
-    {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    
-    self.content = imageContent;
-}
-*/
 #pragma mark - Button functions
 
-- (void)setupButtons
+- (void)initialzeViewButtons
 {
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
-    self.navigationItem.rightBarButtonItem = doneButton;
+    if (previewMode)
+    {
+        self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    }
+    else
+    {
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
+        UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
+        self.navigationItem.rightBarButtonItem = doneButton;
+        self.navigationItem.leftBarButtonItem = cancelButton;
+    }
+}
+
+- (void)cancel
+{
+    if (!self.cancelActionSheet)
+    {
+        _cancelActionSheet = [[UIActionSheet alloc] initWithTitle:@"The record will not be saved" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Yes" otherButtonTitles:nil];
+    }
+    [_cancelActionSheet showInView:self.view];
 }
 
 - (void)done
 {
-#warning check name 
-    [self.navigationController popViewControllerAnimated:YES];
+    if ([_nameField.text length] != 0)
+    {
+        [self dismissModalViewControllerAnimated:YES];
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"The name of the photo is need" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
+}
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+{
+    [super setEditing:editing animated:animated];
+    
+    if (editing)
+    {
+        self.navigationItem.hidesBackButton = YES;
+        UIBarButtonItem *cameraButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(imageSelection)];
+        self.navigationItem.leftBarButtonItem = cameraButton;
+    }
+    else
+    {
+        self.navigationItem.hidesBackButton = NO;
+        self.navigationItem.leftBarButtonItem = nil;
+    }
+}
+
+- (void)imageSelection
+{
+    if (!self.imageSelectionSheet)
+    {
+        _imageSelectionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Select from Photo Album", @"Take a photo", nil];
+    }
+    [_imageSelectionSheet showInView:self.view];
 }
 
 #pragma mark - Table view data source
@@ -128,14 +162,17 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 1)
+    if (indexPath.section == 1) //Image
     {
-        return IMAGE_CELL_HEIGHT;
+        if ([_content.hasImage boolValue])
+        {
+            return BIG_CELL_HEIGHT;
+        }
     }
     
-    if (indexPath.section == 3)
+    if (indexPath.section == 3) //Comment
     {
-        return COMMENT_CELL_HEIGHT;
+        return BIG_CELL_HEIGHT;
     }
     
     return [self.tableView rowHeight];
@@ -155,8 +192,12 @@
         else
         {
             //camera or image roll
-            UIActionSheet *selectionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Select from camera roll", @"Take a photo", nil];
-            [selectionSheet showInView:self.view];
+            if (!self.imageSelectionSheet)
+            {
+                _imageSelectionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Select from Photo Album", @"Take a photo", nil];
+            }
+            
+            [_imageSelectionSheet showInView:self.view];
         }
     }
     
@@ -214,11 +255,6 @@
     return cell;
 }
 
-- (void)textFieldFinished:(id)sender
-{
-    [sender resignFirstResponder];
-}
-
 - (UITableViewCell *)cellForImageView
 {
     static NSString *cellID = @"ImageCell";
@@ -226,7 +262,7 @@
     
     if (!cell)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellID];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellID];
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         cell.accessoryType =  UITableViewCellAccessoryNone;
     }
@@ -234,6 +270,7 @@
     if ([_content.hasImage boolValue])
     {
         cell.imageView.image = [UIImage imageWithData:_imageData];
+        cell.imageView.contentMode = UIViewContentModeScaleAspectFit;
     }
     else
     {
@@ -255,7 +292,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        self.commentView = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 240)];
+        self.commentView = [[UITextView alloc] initWithFrame:CGRectMake(10, 10, 300, 180)];
         _commentView.backgroundColor = [UIColor tableViewCellBackgroundColor];
         _commentView.delegate = self;
         _commentView.editable = YES;
@@ -267,7 +304,7 @@
         [cell addSubview:self.commentView];
     }
     
-    _commentView.text = self.content.imageComment;
+    _commentView.text = self.content.comment;
     
     return cell;
 }
@@ -296,24 +333,124 @@
     return cell;
 }
 
-#pragma mark - Image Selection ActionSheet Delegate
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
+
+#pragma mark - UITextField & UITextView Delegate Methods
+
+
+- (void)textFieldFinished:(id)sender
+{
+    [sender resignFirstResponder];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    //if the textfield is empty, the white space is not allowed
+    if ([textField.text length] == 0)
+    {
+        if ([string isEqualToString:@" "])
+        {
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    _content.name = textField.text;
+    [self saveContent];
+}
+
+- (BOOL)enableEnterKeyForTextView:(UITextView *)view
+{
+    if ([view.text hasSuffix:@"."] || [view.text hasSuffix:@"。"]) {
+        return YES;
+    }
+    if ([view.text hasSuffix:@"?"] || [view.text hasSuffix:@"？"]) {
+        return YES;
+    }
+    if ([view.text hasSuffix:@"!"] || [view.text hasSuffix:@"！"]) {
+        return YES;
+    }
+    if ([view.text hasSuffix:@"~"] || [view.text hasSuffix:@"～"]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"])
+    {
+        if (![self enableEnterKeyForTextView:textView]) {
+            [textView resignFirstResponder];
+            // Return FALSE so that the final '\n' character doesn't get added
+            return NO;
+        }
+    }
+    // For any other character return TRUE so that the text gets added to the view
+    return YES;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    _content.comment = textView.text;
+    [self saveContent];
+}
+
+#pragma mark - UIActionSheet Delegate Method
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    switch (buttonIndex)
+    //control image capture
+    if (actionSheet == _imageSelectionSheet)
     {
-        case 0: {
-            [self useCameraRoll];
-        } break;
-            
-        case 1: {
-            [self useCamera];
-        } break;
-            
-        default:
-            break;
+        switch (buttonIndex)
+        {
+            case 0: {
+                [self useCameraRoll];
+            } break;
+                
+            case 1: {
+                [self useCamera];
+            } break;
+                
+            default:
+                break;
+        }
+    }
+    
+    //control cancel action
+    if (actionSheet == _cancelActionSheet)
+    {
+        switch (buttonIndex)
+        {
+            case 0:{
+                [self deleteContent];
+                [self dismissModalViewControllerAnimated:YES];
+            } break;
+                
+            default:
+                //do nothing
+                break;
+        }
     }
 }
+
+#pragma mark - Delete Content
+
+- (void)deleteContent
+{
+    [self.managedObjectContext deleteObject:_content];
+    [self saveContent];
+}
+
+#pragma mark - Image Picker Delegate Methods
 
 - (void)useCamera
 {
@@ -357,7 +494,13 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     {
         UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
         
-        _content.image = UIImagePNGRepresentation(image);
+        //JPEG format
+        _content.image = UIImageJPEGRepresentation(image, 1.0);
+        
+        //PNG format
+        //_content.image = UIImagePNGRepresentation(image);
+        
+        _content.hasImage = [NSNumber numberWithBool:YES];
         
         if (newMedia)
             UIImageWriteToSavedPhotosAlbum(image,
@@ -365,14 +508,20 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
                                            @selector(image:finishedSavingWithError:contextInfo:),
                                            nil);
     }
-    
-    NSError *error = nil;
-    if (![self.managedObjectContext save:&error])
-    {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
+
+    [self saveContent];
+}
+
+-(void)image:(UIImage *)image finishedSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    if (error) {
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle: @"Save failed"
+                              message: @"Failed to save image"
+                              delegate:nil
+                              cancelButtonTitle:@"OK"
+                              otherButtonTitles:nil];
+        [alert show];
     }
 }
 
@@ -384,6 +533,11 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
     _content.latitude = [NSNumber numberWithDouble:coordinate.latitude];
     _content.longitude = [NSNumber numberWithDouble:coordinate.longitude];
     
+    [self saveContent];
+}
+
+- (void)saveContent
+{
     NSError *error = nil;
     if (![self.managedObjectContext save:&error])
     {
@@ -392,6 +546,7 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
+
 }
 
 @end

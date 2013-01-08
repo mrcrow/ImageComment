@@ -14,10 +14,13 @@
 
 @interface ImageManageController : UITableViewController <UITextFieldDelegate, UITextViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ImageLocationControllerDelegate>
 
-@property (strong, nonatomic) NSManagedObjectContext    *managedObjectContext;
-@property (strong, nonatomic) ImageLocationController   *locationController;
-@property (strong, nonatomic) ImageViewController       *imageController;
+@property (strong, nonatomic)   NSManagedObjectContext      *managedObjectContext;
+@property (strong, nonatomic)   ImageLocationController     *locationController;
+@property (strong, nonatomic)   ImageViewController         *imageController;
 
-@property (strong, nonatomic) ImageContent  *content;
+@property (strong, nonatomic)   ImageContent                *content;
+@property                       BOOL                        previewMode;
+
+- (void)initialzeViewButtons;
 
 @end
