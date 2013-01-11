@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ImageViewController : UIViewController
+@interface ImageViewController : UIViewController <UIScrollViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UIButton *doneButton;
-@property (strong, nonatomic) NSData *imageData;
+@property (weak, nonatomic) IBOutlet    UIBarButtonItem *doneButton;
+@property (strong, nonatomic)           UIImageView     *imageView;
+@property (strong, nonatomic)           NSData          *imageData;
 
 - (IBAction)done;
 

@@ -7,8 +7,8 @@
 //
 
 #import "ImageListController.h"
-#import "ImageManageController.h"
 #import "ImageViewController.h"
+#import "PreviewViewController.h"
 
 @interface ImageListController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -20,7 +20,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = NSLocalizedString(@"Images", @"Image Lists");
+        self.title = NSLocalizedString(@"List", @"Image lists");
     }
     return self;
 }
@@ -48,9 +48,11 @@
     ImageContent *imageContent = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
     
     ImageManageController *manageController = [[ImageManageController alloc] initWithStyle:UITableViewStyleGrouped];
+    manageController.delegate = self;
     manageController.managedObjectContext = self.managedObjectContext;
     manageController.content = imageContent;
 
+    /*
     NSError *error = nil;
     if (![context save:&error])
     {
@@ -58,7 +60,7 @@
         // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
-    }
+    }*/
     
     manageController.previewMode = NO;
     [manageController initialzeViewButtons];
@@ -81,15 +83,21 @@
     return [sectionInfo numberOfObjects];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 58.0;
+}
+
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    if (!cell)
+    {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     }
 
     [self configureCell:cell atIndexPath:indexPath];
@@ -130,14 +138,10 @@
 {
     ImageContent *imageContent = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    if ([imageContent.hasImage boolValue])
-    {
-        cell.imageView.image = [UIImage imageWithData:imageContent.image];
-    }
     cell.textLabel.text = imageContent.name;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     ImageContent *imageContent = [self.fetchedResultsController objectAtIndexPath:indexPath];
     
@@ -148,6 +152,23 @@
     manageController.previewMode = YES;
     [manageController initialzeViewButtons];
     [self.navigationController pushViewController:manageController animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ImageContent *imageContent = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    /*
+    ImageViewController *imageController = [[ImageViewController alloc] initWithNibName:@"ImageViewController" bundle:nil];
+    imageController.imageData = imageContent.image;
+    imageController.title = imageContent.name;
+    */
+    PreviewViewController *preView = [[PreviewViewController alloc] initWithNibName:@"PreviewViewController" bundle:nil];
+    preView.imageData = imageContent.image;
+    [preView presentMode];
+    
+    UINavigationController *previewNavigator = [[UINavigationController alloc] initWithRootViewController:preView];
+    
+    [self presentModalViewController:previewNavigator animated:YES];
 }
 
 #pragma mark - Fetched results controller
@@ -243,5 +264,14 @@
     [self.tableView endUpdates];
 }
 
+#pragma mark - ImageManageController Delegate
+
+- (void)imageManagerController:(ImageManageController *)controller didFinishEditContent:(BOOL)success
+{
+    if (success)
+    {
+        [self.tableView reloadData];
+    }
+}
 
 @end

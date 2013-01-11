@@ -9,23 +9,27 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import "ImageContent.h"
 #import "PopoverView.h"
+
+//@protocol ImageLocationControllerDelegate;
 
 @protocol ImageLocationControllerDelegate;
 
-@interface ImageLocationController : UIViewController <PopoverViewDelegate>
+@interface ImageLocationController : UIViewController <PopoverViewDelegate, MKMapViewDelegate>
 
-@property (weak, nonatomic) IBOutlet MKMapView  *mapView;
-@property (strong, nonatomic) UIImageView       *centerTarget;
+@property (weak, nonatomic) IBOutlet    MKMapView                   *mapView;
+@property (strong, nonatomic)           UIImageView                 *centerTarget;
+@property (strong, nonatomic)           ImageContent                *content;
+@property (strong, nonatomic)           NSManagedObjectContext      *managedObjectContext;
+@property                               BOOL                        previewMode;
 
-@property (weak, nonatomic) id <ImageLocationControllerDelegate> delegate;
-
-- (void)viewLicationCoordinate:(CLLocationCoordinate2D)coordinate;
+@property (weak, nonatomic) id <ImageLocationControllerDelegate>    delegate;
 
 @end
 
 @protocol ImageLocationControllerDelegate
 
-- (void)imageLocationController:(ImageLocationController *)controller receiveImageLocation:(CLLocationCoordinate2D)coordinate;
+- (void)imageLocationController:(ImageLocationController *)controller didFinishLocating:(BOOL)success;
 
 @end

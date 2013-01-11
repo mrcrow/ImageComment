@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 
 #import <CoreData/CoreData.h>
+#import "ImageManageController.h"
 
-@interface ImageListController : UITableViewController <NSFetchedResultsControllerDelegate, UISearchDisplayDelegate>
+@interface ImageListController : UITableViewController <NSFetchedResultsControllerDelegate, UISearchDisplayDelegate, ImageManagerControllerDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
