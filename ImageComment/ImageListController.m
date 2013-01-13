@@ -136,14 +136,15 @@
     cell.textLabel.text = imageContent.name;
 }
 
-- (void)previewContent:(UIGestureRecognizer *)gesture
+- (void)previewContent:(UILongPressGestureRecognizer *)gesture
 {
     if (gesture.state != UIGestureRecognizerStateBegan)
     {
         return;
     }
 
-    NSIndexPath *selectedRow = [[self.tableView indexPathsForSelectedRows] lastObject];
+    NSIndexPath *selectedRow = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
+
     ImageContent *imageContent = [self.fetchedResultsController objectAtIndexPath:selectedRow];
 
     MyPhoto *photo = [[MyPhoto alloc] initWithImageURL:nil name:imageContent.comment image:[UIImage imageWithData:imageContent.image]];
