@@ -32,17 +32,38 @@
 		E853C3C9168574E600BDC3F3 /* ActionSheetStringPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3C31685747B00BDC3F3 /* ActionSheetStringPicker.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E853C3CA168574E600BDC3F3 /* DistancePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3C51685747B00BDC3F3 /* DistancePickerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E853C3CB168574E600BDC3F3 /* PopoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3BA1685746D00BDC3F3 /* PopoverView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		E853C48E1686B5E700BDC3F3 /* PlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C48D1686B5E700BDC3F3 /* PlaceHolderTextView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E86AEF67168A02F2002234FE /* success.png in Resources */ = {isa = PBXBuildFile; fileRef = E86AEF65168A02F2002234FE /* success.png */; };
 		E86AEF68168A02F2002234FE /* success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E86AEF66168A02F2002234FE /* success@2x.png */; };
 		E86AEF6C168A0332002234FE /* target.png in Resources */ = {isa = PBXBuildFile; fileRef = E86AEF6A168A0332002234FE /* target.png */; };
 		E86AEF6D168A0332002234FE /* target@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E86AEF6B168A0332002234FE /* target@2x.png */; };
 		E86AEF7C168B5EC6002234FE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E86AEF7B168B5EC6002234FE /* QuartzCore.framework */; };
+		E86FF3AC16A128A40046BA2A /* egopv_error_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = E86FF3A116A128A40046BA2A /* egopv_error_placeholder.png */; };
+		E86FF3AD16A128A40046BA2A /* egopv_error_placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E86FF3A216A128A40046BA2A /* egopv_error_placeholder@2x.png */; };
+		E86FF3AE16A128A40046BA2A /* egopv_fullscreen_button.png in Resources */ = {isa = PBXBuildFile; fileRef = E86FF3A316A128A40046BA2A /* egopv_fullscreen_button.png */; };
+		E86FF3AF16A128A40046BA2A /* egopv_fullscreen_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E86FF3A416A128A40046BA2A /* egopv_fullscreen_button@2x.png */; };
+		E86FF3B016A128A40046BA2A /* egopv_left.png in Resources */ = {isa = PBXBuildFile; fileRef = E86FF3A516A128A40046BA2A /* egopv_left.png */; };
+		E86FF3B116A128A40046BA2A /* egopv_left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E86FF3A616A128A40046BA2A /* egopv_left@2x.png */; };
+		E86FF3B216A128A40046BA2A /* egopv_minimize_fullscreen_button.png in Resources */ = {isa = PBXBuildFile; fileRef = E86FF3A716A128A40046BA2A /* egopv_minimize_fullscreen_button.png */; };
+		E86FF3B316A128A40046BA2A /* egopv_photo_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = E86FF3A816A128A40046BA2A /* egopv_photo_placeholder.png */; };
+		E86FF3B416A128A40046BA2A /* egopv_photo_placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E86FF3A916A128A40046BA2A /* egopv_photo_placeholder@2x.png */; };
+		E86FF3B516A128A40046BA2A /* egopv_right.png in Resources */ = {isa = PBXBuildFile; fileRef = E86FF3AA16A128A40046BA2A /* egopv_right.png */; };
+		E86FF3B616A128A40046BA2A /* egopv_right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E86FF3AB16A128A40046BA2A /* egopv_right@2x.png */; };
+		E86FF3CD16A154C80046BA2A /* EGOImageLoadConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF3C016A128F40046BA2A /* EGOImageLoadConnection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E86FF3CE16A154C80046BA2A /* EGOImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF3C216A128F40046BA2A /* EGOImageLoader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E86FF3CF16A154C80046BA2A /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF3BE16A128EA0046BA2A /* EGOCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E86FF3D016A154C80046BA2A /* EGOQuickPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF39B16A128540046BA2A /* EGOQuickPhoto.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E86FF3D116A154C80046BA2A /* EGOQuickPhotoSource.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF39D16A128540046BA2A /* EGOQuickPhotoSource.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E86FF3D216A154C80046BA2A /* EGOPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF3A016A128940046BA2A /* EGOPhotoViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E86FF3D316A154C80046BA2A /* EGOPhotoScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF3BC16A128D80046BA2A /* EGOPhotoScrollView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E86FF3D416A154C80046BA2A /* EGOPhotoImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF3BA16A128CD0046BA2A /* EGOPhotoImageView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E86FF3D516A154C80046BA2A /* EGOPhotoCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF3B816A128C20046BA2A /* EGOPhotoCaptionView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E86FF3D616A154C80046BA2A /* MyPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF3CA16A154900046BA2A /* MyPhoto.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E86FF3D716A154C80046BA2A /* MyPhotoSource.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF3CC16A154900046BA2A /* MyPhotoSource.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E86FF3D916A155F90046BA2A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E86FF3D816A155F90046BA2A /* MessageUI.framework */; };
 		E8972D76169EA190003686D1 /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8972D74169EA190003686D1 /* PreviewViewController.m */; };
 		E8972D77169EA190003686D1 /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8972D75169EA190003686D1 /* PreviewViewController.xib */; };
 		E8EBD0BC169ACF1C000D118F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8EBD0BB169ACF1C000D118F /* MobileCoreServices.framework */; };
 		E8EBD0C2169BC0DD000D118F /* ColorExtention.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3D116860EC300BDC3F3 /* ColorExtention.m */; };
-		E8FF414C169E7EE500ED8F83 /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = E8FF414B169E7EE500ED8F83 /* placeholder.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -89,18 +110,51 @@
 		E853C3C51685747B00BDC3F3 /* DistancePickerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = DistancePickerView.m; path = Picker/DistancePickerView.m; sourceTree = "<group>"; };
 		E853C3D016860EC300BDC3F3 /* ColorExtention.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ColorExtention.h; sourceTree = "<group>"; };
 		E853C3D116860EC300BDC3F3 /* ColorExtention.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ColorExtention.m; sourceTree = "<group>"; };
-		E853C48C1686B5E600BDC3F3 /* PlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaceHolderTextView.h; sourceTree = "<group>"; };
-		E853C48D1686B5E700BDC3F3 /* PlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaceHolderTextView.m; sourceTree = "<group>"; };
 		E86AEF65168A02F2002234FE /* success.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = success.png; path = icons/success.png; sourceTree = "<group>"; };
 		E86AEF66168A02F2002234FE /* success@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "success@2x.png"; path = "icons/success@2x.png"; sourceTree = "<group>"; };
 		E86AEF6A168A0332002234FE /* target.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = target.png; path = icons/target.png; sourceTree = "<group>"; };
 		E86AEF6B168A0332002234FE /* target@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "target@2x.png"; path = "icons/target@2x.png"; sourceTree = "<group>"; };
 		E86AEF7B168B5EC6002234FE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		E86FF39916A128440046BA2A /* EGOPhotoGlobal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EGOPhotoGlobal.h; path = EGOPhoto/EGOPhotoViewer/EGOPhotoGlobal.h; sourceTree = "<group>"; };
+		E86FF39A16A128540046BA2A /* EGOQuickPhoto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EGOQuickPhoto.h; path = EGOPhoto/EGOPhotoViewer/Model/EGOQuickPhoto/EGOQuickPhoto.h; sourceTree = "<group>"; };
+		E86FF39B16A128540046BA2A /* EGOQuickPhoto.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EGOQuickPhoto.m; path = EGOPhoto/EGOPhotoViewer/Model/EGOQuickPhoto/EGOQuickPhoto.m; sourceTree = "<group>"; };
+		E86FF39C16A128540046BA2A /* EGOQuickPhotoSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EGOQuickPhotoSource.h; path = EGOPhoto/EGOPhotoViewer/Model/EGOQuickPhoto/EGOQuickPhotoSource.h; sourceTree = "<group>"; };
+		E86FF39D16A128540046BA2A /* EGOQuickPhotoSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EGOQuickPhotoSource.m; path = EGOPhoto/EGOPhotoViewer/Model/EGOQuickPhoto/EGOQuickPhotoSource.m; sourceTree = "<group>"; };
+		E86FF39E16A1287E0046BA2A /* EGOPhotoSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EGOPhotoSource.h; path = EGOPhoto/EGOPhotoViewer/Model/EGOPhotoSource/EGOPhotoSource.h; sourceTree = "<group>"; };
+		E86FF39F16A128940046BA2A /* EGOPhotoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EGOPhotoViewController.h; path = EGOPhoto/EGOPhotoViewer/Controller/EGOPhotoViewController/EGOPhotoViewController.h; sourceTree = "<group>"; };
+		E86FF3A016A128940046BA2A /* EGOPhotoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EGOPhotoViewController.m; path = EGOPhoto/EGOPhotoViewer/Controller/EGOPhotoViewController/EGOPhotoViewController.m; sourceTree = "<group>"; };
+		E86FF3A116A128A40046BA2A /* egopv_error_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = egopv_error_placeholder.png; path = EGOPhoto/EGOPhotoViewer/Resources/egopv_error_placeholder.png; sourceTree = "<group>"; };
+		E86FF3A216A128A40046BA2A /* egopv_error_placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "egopv_error_placeholder@2x.png"; path = "EGOPhoto/EGOPhotoViewer/Resources/egopv_error_placeholder@2x.png"; sourceTree = "<group>"; };
+		E86FF3A316A128A40046BA2A /* egopv_fullscreen_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = egopv_fullscreen_button.png; path = EGOPhoto/EGOPhotoViewer/Resources/egopv_fullscreen_button.png; sourceTree = "<group>"; };
+		E86FF3A416A128A40046BA2A /* egopv_fullscreen_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "egopv_fullscreen_button@2x.png"; path = "EGOPhoto/EGOPhotoViewer/Resources/egopv_fullscreen_button@2x.png"; sourceTree = "<group>"; };
+		E86FF3A516A128A40046BA2A /* egopv_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = egopv_left.png; path = EGOPhoto/EGOPhotoViewer/Resources/egopv_left.png; sourceTree = "<group>"; };
+		E86FF3A616A128A40046BA2A /* egopv_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "egopv_left@2x.png"; path = "EGOPhoto/EGOPhotoViewer/Resources/egopv_left@2x.png"; sourceTree = "<group>"; };
+		E86FF3A716A128A40046BA2A /* egopv_minimize_fullscreen_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = egopv_minimize_fullscreen_button.png; path = EGOPhoto/EGOPhotoViewer/Resources/egopv_minimize_fullscreen_button.png; sourceTree = "<group>"; };
+		E86FF3A816A128A40046BA2A /* egopv_photo_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = egopv_photo_placeholder.png; path = EGOPhoto/EGOPhotoViewer/Resources/egopv_photo_placeholder.png; sourceTree = "<group>"; };
+		E86FF3A916A128A40046BA2A /* egopv_photo_placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "egopv_photo_placeholder@2x.png"; path = "EGOPhoto/EGOPhotoViewer/Resources/egopv_photo_placeholder@2x.png"; sourceTree = "<group>"; };
+		E86FF3AA16A128A40046BA2A /* egopv_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = egopv_right.png; path = EGOPhoto/EGOPhotoViewer/Resources/egopv_right.png; sourceTree = "<group>"; };
+		E86FF3AB16A128A40046BA2A /* egopv_right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "egopv_right@2x.png"; path = "EGOPhoto/EGOPhotoViewer/Resources/egopv_right@2x.png"; sourceTree = "<group>"; };
+		E86FF3B716A128C20046BA2A /* EGOPhotoCaptionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EGOPhotoCaptionView.h; path = EGOPhoto/EGOPhotoViewer/Views/EGOPhotoCaptionView/EGOPhotoCaptionView.h; sourceTree = "<group>"; };
+		E86FF3B816A128C20046BA2A /* EGOPhotoCaptionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EGOPhotoCaptionView.m; path = EGOPhoto/EGOPhotoViewer/Views/EGOPhotoCaptionView/EGOPhotoCaptionView.m; sourceTree = "<group>"; };
+		E86FF3B916A128CD0046BA2A /* EGOPhotoImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EGOPhotoImageView.h; path = EGOPhoto/EGOPhotoViewer/Views/EGOPhotoImageView/EGOPhotoImageView.h; sourceTree = "<group>"; };
+		E86FF3BA16A128CD0046BA2A /* EGOPhotoImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EGOPhotoImageView.m; path = EGOPhoto/EGOPhotoViewer/Views/EGOPhotoImageView/EGOPhotoImageView.m; sourceTree = "<group>"; };
+		E86FF3BB16A128D80046BA2A /* EGOPhotoScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EGOPhotoScrollView.h; path = EGOPhoto/EGOPhotoViewer/Views/EGOPhotoScrollView/EGOPhotoScrollView.h; sourceTree = "<group>"; };
+		E86FF3BC16A128D80046BA2A /* EGOPhotoScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EGOPhotoScrollView.m; path = EGOPhoto/EGOPhotoViewer/Views/EGOPhotoScrollView/EGOPhotoScrollView.m; sourceTree = "<group>"; };
+		E86FF3BD16A128EA0046BA2A /* EGOCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EGOCache.h; path = EGOPhoto/EGOCache/EGOCache.h; sourceTree = "<group>"; };
+		E86FF3BE16A128EA0046BA2A /* EGOCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EGOCache.m; path = EGOPhoto/EGOCache/EGOCache.m; sourceTree = "<group>"; };
+		E86FF3BF16A128F40046BA2A /* EGOImageLoadConnection.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EGOImageLoadConnection.h; path = EGOPhoto/EGOImageLoader/EGOImageLoadConnection.h; sourceTree = "<group>"; };
+		E86FF3C016A128F40046BA2A /* EGOImageLoadConnection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EGOImageLoadConnection.m; path = EGOPhoto/EGOImageLoader/EGOImageLoadConnection.m; sourceTree = "<group>"; };
+		E86FF3C116A128F40046BA2A /* EGOImageLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EGOImageLoader.h; path = EGOPhoto/EGOImageLoader/EGOImageLoader.h; sourceTree = "<group>"; };
+		E86FF3C216A128F40046BA2A /* EGOImageLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EGOImageLoader.m; path = EGOPhoto/EGOImageLoader/EGOImageLoader.m; sourceTree = "<group>"; };
+		E86FF3C916A154900046BA2A /* MyPhoto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPhoto.h; sourceTree = "<group>"; };
+		E86FF3CA16A154900046BA2A /* MyPhoto.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyPhoto.m; sourceTree = "<group>"; };
+		E86FF3CB16A154900046BA2A /* MyPhotoSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPhotoSource.h; sourceTree = "<group>"; };
+		E86FF3CC16A154900046BA2A /* MyPhotoSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyPhotoSource.m; sourceTree = "<group>"; };
+		E86FF3D816A155F90046BA2A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		E8972D73169EA190003686D1 /* PreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewViewController.h; sourceTree = "<group>"; };
 		E8972D74169EA190003686D1 /* PreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewViewController.m; sourceTree = "<group>"; };
 		E8972D75169EA190003686D1 /* PreviewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewViewController.xib; sourceTree = "<group>"; };
 		E8EBD0BB169ACF1C000D118F /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		E8FF414B169E7EE500ED8F83 /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +162,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E86FF3D916A155F90046BA2A /* MessageUI.framework in Frameworks */,
 				E8EBD0BC169ACF1C000D118F /* MobileCoreServices.framework in Frameworks */,
 				E86AEF7C168B5EC6002234FE /* QuartzCore.framework in Frameworks */,
 				E853C3B11684C47200BDC3F3 /* CoreLocation.framework in Frameworks */,
@@ -122,14 +177,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E825C091169D0E3C00EE5DDB /* Image Content Manager */ = {
+		E825C091169D0E3C00EE5DDB /* Image Content  */ = {
 			isa = PBXGroup;
 			children = (
 				E853C38916836C4700BDC3F3 /* ImageManageController.h */,
 				E853C38A16836C4700BDC3F3 /* ImageManageController.m */,
 				E853C38B16836C4800BDC3F3 /* ImageManageController.xib */,
 			);
-			name = "Image Content Manager";
+			name = "Image Content ";
 			sourceTree = "<group>";
 		};
 		E853C33A1683562A00BDC3F3 = {
@@ -152,6 +207,7 @@
 		E853C3481683562A00BDC3F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E86FF3D816A155F90046BA2A /* MessageUI.framework */,
 				E8EBD0BB169ACF1C000D118F /* MobileCoreServices.framework */,
 				E86AEF7B168B5EC6002234FE /* QuartzCore.framework */,
 				E853C3B01684C47100BDC3F3 /* CoreLocation.framework */,
@@ -168,13 +224,14 @@
 			isa = PBXGroup;
 			children = (
 				E853C3B81685745400BDC3F3 /* Libary */,
+				E853C3D016860EC300BDC3F3 /* ColorExtention.h */,
+				E853C3D116860EC300BDC3F3 /* ColorExtention.m */,
 				E853C35A1683562A00BDC3F3 /* AppDelegate.h */,
 				E853C35B1683562A00BDC3F3 /* AppDelegate.m */,
-				E853C3661683562A00BDC3F3 /* ImageListController.h */,
-				E853C3671683562A00BDC3F3 /* ImageListController.m */,
-				E853C36C1683562B00BDC3F3 /* ImageListController.xib */,
-				E825C091169D0E3C00EE5DDB /* Image Content Manager */,
-				E853C3B216856CFB00BDC3F3 /* Image Content Attributes */,
+				E86FF3C816A154830046BA2A /* Photo Modal */,
+				E86FF3C716A154510046BA2A /* Image List */,
+				E825C091169D0E3C00EE5DDB /* Image Content  */,
+				E853C3B216856CFB00BDC3F3 /* Content Attributes */,
 				E853C38516835E4900BDC3F3 /* Data Modal */,
 				E853C3521683562A00BDC3F3 /* Supporting Files */,
 			);
@@ -184,7 +241,6 @@
 		E853C3521683562A00BDC3F3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E8FF414B169E7EE500ED8F83 /* placeholder.png */,
 				E86AEF65168A02F2002234FE /* success.png */,
 				E86AEF66168A02F2002234FE /* success@2x.png */,
 				E86AEF6A168A0332002234FE /* target.png */,
@@ -210,7 +266,7 @@
 			name = "Data Modal";
 			sourceTree = "<group>";
 		};
-		E853C3B216856CFB00BDC3F3 /* Image Content Attributes */ = {
+		E853C3B216856CFB00BDC3F3 /* Content Attributes */ = {
 			isa = PBXGroup;
 			children = (
 				E853C3A916841DC500BDC3F3 /* ImageLocationController.h */,
@@ -220,16 +276,22 @@
 				E853C3AB16841DC700BDC3F3 /* ImageLocationController.xib */,
 				E8972D75169EA190003686D1 /* PreviewViewController.xib */,
 			);
-			name = "Image Content Attributes";
+			name = "Content Attributes";
 			sourceTree = "<group>";
 		};
 		E853C3B81685745400BDC3F3 /* Libary */ = {
 			isa = PBXGroup;
 			children = (
-				E853C48C1686B5E600BDC3F3 /* PlaceHolderTextView.h */,
-				E853C48D1686B5E700BDC3F3 /* PlaceHolderTextView.m */,
-				E853C3D016860EC300BDC3F3 /* ColorExtention.h */,
-				E853C3D116860EC300BDC3F3 /* ColorExtention.m */,
+				E86FF3C316A129B80046BA2A /* EGOPhoto */,
+				E86FF36716A1242B0046BA2A /* PopoverView */,
+				E86FF36616A123FD0046BA2A /* ActionSheetPicker */,
+			);
+			name = Libary;
+			sourceTree = "<group>";
+		};
+		E86FF36616A123FD0046BA2A /* ActionSheetPicker */ = {
+			isa = PBXGroup;
+			children = (
 				E853C3C11685747B00BDC3F3 /* ActionSheetPicker.h */,
 				E853C3BB1685747B00BDC3F3 /* AbstractActionSheetPicker.h */,
 				E853C3BC1685747B00BDC3F3 /* AbstractActionSheetPicker.m */,
@@ -241,10 +303,180 @@
 				E853C3C31685747B00BDC3F3 /* ActionSheetStringPicker.m */,
 				E853C3C41685747B00BDC3F3 /* DistancePickerView.h */,
 				E853C3C51685747B00BDC3F3 /* DistancePickerView.m */,
+			);
+			name = ActionSheetPicker;
+			sourceTree = "<group>";
+		};
+		E86FF36716A1242B0046BA2A /* PopoverView */ = {
+			isa = PBXGroup;
+			children = (
 				E853C3B91685746D00BDC3F3 /* PopoverView.h */,
 				E853C3BA1685746D00BDC3F3 /* PopoverView.m */,
 			);
-			name = Libary;
+			name = PopoverView;
+			sourceTree = "<group>";
+		};
+		E86FF36816A124500046BA2A /* EGOPhotoViewer */ = {
+			isa = PBXGroup;
+			children = (
+				E86FF39916A128440046BA2A /* EGOPhotoGlobal.h */,
+				E86FF36C16A124D50046BA2A /* Modal */,
+				E86FF36916A124A40046BA2A /* Controller */,
+				E86FF36B16A124C20046BA2A /* Resource */,
+				E86FF36A16A124B10046BA2A /* Views */,
+			);
+			name = EGOPhotoViewer;
+			sourceTree = "<group>";
+		};
+		E86FF36916A124A40046BA2A /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E86FF36E16A124FF0046BA2A /* EGOPhotoViewController */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		E86FF36A16A124B10046BA2A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E86FF39416A125920046BA2A /* EGOPhotoScrollView */,
+				E86FF39116A1257B0046BA2A /* EGOPhotoImageView */,
+				E86FF38E16A125680046BA2A /* EGOPhotoCaptionView */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		E86FF36B16A124C20046BA2A /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				E86FF3A116A128A40046BA2A /* egopv_error_placeholder.png */,
+				E86FF3A216A128A40046BA2A /* egopv_error_placeholder@2x.png */,
+				E86FF3A316A128A40046BA2A /* egopv_fullscreen_button.png */,
+				E86FF3A416A128A40046BA2A /* egopv_fullscreen_button@2x.png */,
+				E86FF3A516A128A40046BA2A /* egopv_left.png */,
+				E86FF3A616A128A40046BA2A /* egopv_left@2x.png */,
+				E86FF3A716A128A40046BA2A /* egopv_minimize_fullscreen_button.png */,
+				E86FF3A816A128A40046BA2A /* egopv_photo_placeholder.png */,
+				E86FF3A916A128A40046BA2A /* egopv_photo_placeholder@2x.png */,
+				E86FF3AA16A128A40046BA2A /* egopv_right.png */,
+				E86FF3AB16A128A40046BA2A /* egopv_right@2x.png */,
+			);
+			name = Resource;
+			sourceTree = "<group>";
+		};
+		E86FF36C16A124D50046BA2A /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				E86FF37316A125320046BA2A /* EGOQuickPhoto */,
+				E86FF37116A1251D0046BA2A /* EGOPhotoSource */,
+			);
+			name = Modal;
+			sourceTree = "<group>";
+		};
+		E86FF36E16A124FF0046BA2A /* EGOPhotoViewController */ = {
+			isa = PBXGroup;
+			children = (
+				E86FF39F16A128940046BA2A /* EGOPhotoViewController.h */,
+				E86FF3A016A128940046BA2A /* EGOPhotoViewController.m */,
+			);
+			name = EGOPhotoViewController;
+			sourceTree = "<group>";
+		};
+		E86FF37116A1251D0046BA2A /* EGOPhotoSource */ = {
+			isa = PBXGroup;
+			children = (
+				E86FF39E16A1287E0046BA2A /* EGOPhotoSource.h */,
+			);
+			name = EGOPhotoSource;
+			sourceTree = "<group>";
+		};
+		E86FF37316A125320046BA2A /* EGOQuickPhoto */ = {
+			isa = PBXGroup;
+			children = (
+				E86FF39A16A128540046BA2A /* EGOQuickPhoto.h */,
+				E86FF39B16A128540046BA2A /* EGOQuickPhoto.m */,
+				E86FF39C16A128540046BA2A /* EGOQuickPhotoSource.h */,
+				E86FF39D16A128540046BA2A /* EGOQuickPhotoSource.m */,
+			);
+			name = EGOQuickPhoto;
+			sourceTree = "<group>";
+		};
+		E86FF38E16A125680046BA2A /* EGOPhotoCaptionView */ = {
+			isa = PBXGroup;
+			children = (
+				E86FF3B716A128C20046BA2A /* EGOPhotoCaptionView.h */,
+				E86FF3B816A128C20046BA2A /* EGOPhotoCaptionView.m */,
+			);
+			name = EGOPhotoCaptionView;
+			sourceTree = "<group>";
+		};
+		E86FF39116A1257B0046BA2A /* EGOPhotoImageView */ = {
+			isa = PBXGroup;
+			children = (
+				E86FF3B916A128CD0046BA2A /* EGOPhotoImageView.h */,
+				E86FF3BA16A128CD0046BA2A /* EGOPhotoImageView.m */,
+			);
+			name = EGOPhotoImageView;
+			sourceTree = "<group>";
+		};
+		E86FF39416A125920046BA2A /* EGOPhotoScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				E86FF3BB16A128D80046BA2A /* EGOPhotoScrollView.h */,
+				E86FF3BC16A128D80046BA2A /* EGOPhotoScrollView.m */,
+			);
+			name = EGOPhotoScrollView;
+			sourceTree = "<group>";
+		};
+		E86FF39716A127D50046BA2A /* EGOCache */ = {
+			isa = PBXGroup;
+			children = (
+				E86FF3BD16A128EA0046BA2A /* EGOCache.h */,
+				E86FF3BE16A128EA0046BA2A /* EGOCache.m */,
+			);
+			name = EGOCache;
+			sourceTree = "<group>";
+		};
+		E86FF39816A128380046BA2A /* EGOImageLoader */ = {
+			isa = PBXGroup;
+			children = (
+				E86FF3BF16A128F40046BA2A /* EGOImageLoadConnection.h */,
+				E86FF3C016A128F40046BA2A /* EGOImageLoadConnection.m */,
+				E86FF3C116A128F40046BA2A /* EGOImageLoader.h */,
+				E86FF3C216A128F40046BA2A /* EGOImageLoader.m */,
+			);
+			name = EGOImageLoader;
+			sourceTree = "<group>";
+		};
+		E86FF3C316A129B80046BA2A /* EGOPhoto */ = {
+			isa = PBXGroup;
+			children = (
+				E86FF39816A128380046BA2A /* EGOImageLoader */,
+				E86FF39716A127D50046BA2A /* EGOCache */,
+				E86FF36816A124500046BA2A /* EGOPhotoViewer */,
+			);
+			name = EGOPhoto;
+			sourceTree = "<group>";
+		};
+		E86FF3C716A154510046BA2A /* Image List */ = {
+			isa = PBXGroup;
+			children = (
+				E853C3661683562A00BDC3F3 /* ImageListController.h */,
+				E853C3671683562A00BDC3F3 /* ImageListController.m */,
+				E853C36C1683562B00BDC3F3 /* ImageListController.xib */,
+			);
+			name = "Image List";
+			sourceTree = "<group>";
+		};
+		E86FF3C816A154830046BA2A /* Photo Modal */ = {
+			isa = PBXGroup;
+			children = (
+				E86FF3C916A154900046BA2A /* MyPhoto.h */,
+				E86FF3CA16A154900046BA2A /* MyPhoto.m */,
+				E86FF3CB16A154900046BA2A /* MyPhotoSource.h */,
+				E86FF3CC16A154900046BA2A /* MyPhotoSource.m */,
+			);
+			name = "Photo Modal";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -308,8 +540,18 @@
 				E86AEF68168A02F2002234FE /* success@2x.png in Resources */,
 				E86AEF6C168A0332002234FE /* target.png in Resources */,
 				E86AEF6D168A0332002234FE /* target@2x.png in Resources */,
-				E8FF414C169E7EE500ED8F83 /* placeholder.png in Resources */,
 				E8972D77169EA190003686D1 /* PreviewViewController.xib in Resources */,
+				E86FF3AC16A128A40046BA2A /* egopv_error_placeholder.png in Resources */,
+				E86FF3AD16A128A40046BA2A /* egopv_error_placeholder@2x.png in Resources */,
+				E86FF3AE16A128A40046BA2A /* egopv_fullscreen_button.png in Resources */,
+				E86FF3AF16A128A40046BA2A /* egopv_fullscreen_button@2x.png in Resources */,
+				E86FF3B016A128A40046BA2A /* egopv_left.png in Resources */,
+				E86FF3B116A128A40046BA2A /* egopv_left@2x.png in Resources */,
+				E86FF3B216A128A40046BA2A /* egopv_minimize_fullscreen_button.png in Resources */,
+				E86FF3B316A128A40046BA2A /* egopv_photo_placeholder.png in Resources */,
+				E86FF3B416A128A40046BA2A /* egopv_photo_placeholder@2x.png in Resources */,
+				E86FF3B516A128A40046BA2A /* egopv_right.png in Resources */,
+				E86FF3B616A128A40046BA2A /* egopv_right@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,6 +562,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E86FF3CD16A154C80046BA2A /* EGOImageLoadConnection.m in Sources */,
+				E86FF3CE16A154C80046BA2A /* EGOImageLoader.m in Sources */,
+				E86FF3CF16A154C80046BA2A /* EGOCache.m in Sources */,
+				E86FF3D016A154C80046BA2A /* EGOQuickPhoto.m in Sources */,
+				E86FF3D116A154C80046BA2A /* EGOQuickPhotoSource.m in Sources */,
+				E86FF3D216A154C80046BA2A /* EGOPhotoViewController.m in Sources */,
+				E86FF3D316A154C80046BA2A /* EGOPhotoScrollView.m in Sources */,
+				E86FF3D416A154C80046BA2A /* EGOPhotoImageView.m in Sources */,
+				E86FF3D516A154C80046BA2A /* EGOPhotoCaptionView.m in Sources */,
+				E86FF3D616A154C80046BA2A /* MyPhoto.m in Sources */,
+				E86FF3D716A154C80046BA2A /* MyPhotoSource.m in Sources */,
 				E8EBD0C2169BC0DD000D118F /* ColorExtention.m in Sources */,
 				E853C3C6168574E600BDC3F3 /* AbstractActionSheetPicker.m in Sources */,
 				E853C3C7168574E600BDC3F3 /* ActionSheetDatePicker.m in Sources */,
@@ -333,7 +586,6 @@
 				E853C3651683562A00BDC3F3 /* ImageComment.xcdatamodeld in Sources */,
 				E853C3681683562A00BDC3F3 /* ImageListController.m in Sources */,
 				E853C3AC16841DC700BDC3F3 /* ImageLocationController.m in Sources */,
-				E853C48E1686B5E700BDC3F3 /* PlaceHolderTextView.m in Sources */,
 				E800F05D169C1E0A0013E4A3 /* ImageContent.m in Sources */,
 				E8972D76169EA190003686D1 /* PreviewViewController.m in Sources */,
 			);

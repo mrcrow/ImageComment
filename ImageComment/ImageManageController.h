@@ -12,7 +12,6 @@
 #import "ImageContent.h"
 #import "ColorExtention.h"
 #import "ImageLocationController.h"
-#import "ImageViewController.h"
 #import "PreviewViewController.h"
 
 @protocol ImageManagerControllerDelegate;

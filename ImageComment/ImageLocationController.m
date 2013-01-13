@@ -23,7 +23,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.title = @"Location";
+        self.title = NSLocalizedString(@"Location", @"Location");
     }
     return self;
 }
@@ -31,10 +31,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setupView];
-    [self setupTargetAndAnnotationContainer];
+    [self setupButtons];
+    [self setupTargetAndMapView];
+    [self addGestureToMapView];
     [self loadLocation];
     
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleBlackTranslucent;
     self.navigationController.navigationBar.barStyle = UIBarStyleBlackTranslucent;
     // Do any additional setup after loading the view from its nib.
 }
@@ -44,12 +46,14 @@
     [super viewWillDisappear:animated];
     if (!previewMode)
     {
-        [self.navigationController setToolbarHidden:YES animated:YES];
-        self.navigationController.toolbar.barStyle = UIBarStyleDefault;
         [delegate imageLocationController:self didFinishLocating:YES];
     }
     
+    [self.navigationController setToolbarHidden:YES animated:YES];
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+    //release for no crash after locating
+    self.mapView = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,25 +98,86 @@
 
 #define MapTypeArray [NSArray arrayWithObjects:@"Standard", @"Satellite", @"Hybrid", nil]
 
-- (void)setupView
+- (void)setupButtons
 {
     MKUserTrackingBarButtonItem *trackingButton = [[MKUserTrackingBarButtonItem alloc] initWithMapView:self.mapView];
-    UIBarButtonItem *locateButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPinToMap)];
+    UIBarButtonItem *locateButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPinToMapView)];
     //locateButton.style = UIBarButtonItemStyleBordered;
     UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     UIBarButtonItem *typeButton = [[UIBarButtonItem alloc] initWithTitle:@"Map" style:UIBarButtonSystemItemDone target:self action:@selector(showMapTypePop)];
-
-    [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:trackingButton, typeButton, nil] animated:YES];
     
     if (!previewMode)
     {
         [self setToolbarItems:[NSArray arrayWithObjects:space, locateButton, space, nil]];
         [self.navigationController setToolbarHidden:NO animated:YES];
         self.navigationController.toolbar.barStyle = UIBarStyleBlackTranslucent;
+        [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:trackingButton, typeButton, nil] animated:YES];
+    }
+    else
+    {
+        [self.navigationController setToolbarHidden:NO animated:YES];
+        self.navigationController.toolbar.barStyle = UIBarStyleBlackTranslucent;
+         [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:typeButton, nil] animated:YES];
     }
 }
 
-- (void)addPinToMap
+- (void)addGestureToMapView
+{
+    if (!previewMode)
+    {
+        UILongPressGestureRecognizer *pinGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(tapPinToMapView:)];
+        pinGesture.minimumPressDuration = 1.0;
+        [self.mapView addGestureRecognizer:pinGesture];
+    }
+    /*
+    else
+    {
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fullScreenMapView:)];
+        tapGesture.numberOfTapsRequired = 1;
+        tapGesture.numberOfTouchesRequired = 1;
+        
+        [self.mapView addGestureRecognizer:tapGesture];
+    }*/
+}
+
+- (void)fullScreenMapView:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (gestureRecognizer.state != UIGestureRecognizerStateEnded)
+    {
+        return;
+    }
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:![UIApplication sharedApplication].statusBarHidden withAnimation:UIStatusBarAnimationFade];
+    [self.navigationController setNavigationBarHidden:!self.navigationController.navigationBar.isHidden animated:YES];
+    [self.navigationController setToolbarHidden:!self.navigationController.toolbar.isHidden animated:YES];
+}
+
+- (void)tapPinToMapView:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (gestureRecognizer.state != UIGestureRecognizerStateBegan)
+    {
+        return;
+    }
+    
+    [self clearAnnotationContainer];
+    
+    CGPoint touchPoint = [gestureRecognizer locationInView:self.mapView];
+    CLLocationCoordinate2D touchMapCoordinate = [self.mapView convertPoint:touchPoint toCoordinateFromView:self.mapView];
+    
+    MKPointAnnotation *annot = [[MKPointAnnotation alloc] init];
+    annot.title = @"Image Location";
+    annot.coordinate = touchMapCoordinate;
+    annot.subtitle = [NSString stringWithFormat:@"φ:%.4f, λ:%.4f", annot.coordinate.latitude, annot.coordinate.longitude];
+    
+    content.hasLocation = [NSNumber numberWithBool:YES];
+    content.latitude = [NSNumber numberWithDouble:touchMapCoordinate.latitude];
+    content.longitude = [NSNumber numberWithDouble:touchMapCoordinate.longitude];
+    
+    [self.mapView addAnnotation:annot];
+    [_userAnnotation addObject:annot];
+}
+
+- (void)addPinToMapView
 {
     [self clearAnnotationContainer];
     
@@ -143,11 +208,19 @@
     }
 }
 
+#define PREVIEW_X   295.0
+#define EDITING_X   255.0
+
 - (void)showMapTypePop
 {
-    //UIBarstyle Default -> height = 0.0;
-    //UIBarstyle Default -> height = 44.0;
-   [PopoverView showPopoverAtPoint:CGPointMake(255.0, 44.0) inView:self.mapView withTitle:@"Map Type" withStringArray:MapTypeArray delegate:self];
+    if (previewMode)
+    {
+        [PopoverView showPopoverAtPoint:CGPointMake(PREVIEW_X, 44.0) inView:self.mapView withTitle:@"    Type    " withStringArray:MapTypeArray delegate:self];
+    }
+    else
+    {
+        [PopoverView showPopoverAtPoint:CGPointMake(EDITING_X, 44.0) inView:self.mapView withTitle:@"    Type    " withStringArray:MapTypeArray delegate:self];
+    }
 }
 
 #pragma mark - MKMapView Delegate Method
@@ -188,17 +261,15 @@
 
 #pragma mark - Center Target
 
-- (void)setupTargetAndAnnotationContainer
+- (void)setupTargetAndMapView
 {
+    
+    
     if (!previewMode)
     {
         centerTarget = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"target"]];
         centerTarget.contentMode = UIViewContentModeScaleAspectFit;
         centerTarget.center = self.mapView.center;
-        
-        //CGFloat x = CGRectGetMidX([[UIScreen mainScreen] applicationFrame]);
-        //CGFloat y = CGRectGetMidY([[UIScreen mainScreen] applicationFrame]);
-        //centerTarget.center = CGPointMake(x, y);
         
         [self.view addSubview:centerTarget];
         
@@ -238,7 +309,5 @@
     //Dismiss the PopoverView after 0.5 seconds
     [popoverView performSelector:@selector(dismiss) withObject:nil afterDelay:0.5f];
 }
-
-
 
 @end

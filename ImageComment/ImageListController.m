@@ -9,6 +9,9 @@
 #import "ImageListController.h"
 #import "ImageViewController.h"
 #import "PreviewViewController.h"
+#import "EGOPhotoGlobal.h"
+#import "MyPhoto.h"
+#import "MyPhotoSource.h"
 
 @interface ImageListController ()
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
@@ -51,19 +54,7 @@
     manageController.delegate = self;
     manageController.managedObjectContext = self.managedObjectContext;
     manageController.content = imageContent;
-
-    /*
-    NSError *error = nil;
-    if (![context save:&error])
-    {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }*/
-    
     manageController.previewMode = NO;
-    [manageController initialzeViewButtons];
     
     UINavigationController *addImageNavigator = [[UINavigationController alloc] initWithRootViewController:manageController];
     
@@ -97,9 +88,13 @@
     if (!cell)
     {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
-        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        
+        UILongPressGestureRecognizer *previewGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(previewContent:)];
+        previewGesture.minimumPressDuration = 1.0;
+        [cell addGestureRecognizer:previewGesture];
     }
-
+    
     [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
@@ -141,6 +136,25 @@
     cell.textLabel.text = imageContent.name;
 }
 
+- (void)previewContent:(UIGestureRecognizer *)gesture
+{
+    if (gesture.state != UIGestureRecognizerStateBegan)
+    {
+        return;
+    }
+
+    NSIndexPath *selectedRow = [[self.tableView indexPathsForSelectedRows] lastObject];
+    ImageContent *imageContent = [self.fetchedResultsController objectAtIndexPath:selectedRow];
+
+    MyPhoto *photo = [[MyPhoto alloc] initWithImageURL:nil name:imageContent.comment image:[UIImage imageWithData:imageContent.image]];
+    MyPhotoSource *source = [[MyPhotoSource alloc] initWithPhotos:[NSArray arrayWithObjects:photo, nil]];
+
+    EGOPhotoViewController *photoController = [[EGOPhotoViewController alloc] initWithPhotoSource:source];
+
+    [self.navigationController pushViewController:photoController animated:YES];
+}
+
+/*
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     ImageContent *imageContent = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -153,22 +167,18 @@
     [manageController initialzeViewButtons];
     [self.navigationController pushViewController:manageController animated:YES];
 }
+*/
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     ImageContent *imageContent = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    /*
-    ImageViewController *imageController = [[ImageViewController alloc] initWithNibName:@"ImageViewController" bundle:nil];
-    imageController.imageData = imageContent.image;
-    imageController.title = imageContent.name;
-    */
-    PreviewViewController *preView = [[PreviewViewController alloc] initWithNibName:@"PreviewViewController" bundle:nil];
-    preView.imageData = imageContent.image;
-    [preView presentMode];
     
-    UINavigationController *previewNavigator = [[UINavigationController alloc] initWithRootViewController:preView];
+    ImageManageController *manageController = [[ImageManageController alloc] initWithStyle:UITableViewStyleGrouped];
+    manageController.managedObjectContext = self.managedObjectContext;
+    manageController.content = imageContent;
+    manageController.previewMode = YES;
     
-    [self presentModalViewController:previewNavigator animated:YES];
+    [self.navigationController pushViewController:manageController animated:YES];
 }
 
 #pragma mark - Fetched results controller

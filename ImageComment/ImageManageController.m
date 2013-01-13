@@ -7,6 +7,9 @@
 //
 
 #import "ImageManageController.h"
+#import "EGOPhotoGlobal.h"
+#import "MyPhoto.h"
+#import "MyPhotoSource.h"
        
 #define BIG_CELL_HEIGHT 200.0
 #define SMALL_CELL_HEIGHT 58.0
@@ -14,22 +17,25 @@
 @interface ImageManageController ()
 @property (strong, nonatomic)   UITextField             *nameField;
 @property (strong, nonatomic)   UITextView              *commentView;
-@property (strong, nonatomic)   UIImageView             *imageView;
-//@property (strong, nonatomic)   UIImagePickerController *picker;
+
 @property                       BOOL                    newMedia;
 
 @property (strong, nonatomic)   UIActionSheet           *imageSelectionSheet;
 @property (strong, nonatomic)   UIActionSheet           *cancelActionSheet;
+
+//@property (strong, nonatomic)   UIImageView             *imageView;
+//@property (strong, nonatomic)   UIImagePickerController *picker;
 @end
 
 @implementation ImageManageController
 @synthesize managedObjectContext = _managedObjectContext;
-@synthesize nameField = _nameField, commentView = _commentView, imageView = _imageView;
+@synthesize nameField = _nameField, commentView = _commentView;
 @synthesize content = _content;
 @synthesize newMedia, previewMode;
 @synthesize delegate;
 @synthesize imageSelectionSheet = _imageSelectionSheet, cancelActionSheet = _cancelActionSheet;
 //@synthesize picker;
+//@synthesize imageView = _imageView;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -46,6 +52,8 @@
     [super viewDidLoad];
     self.tableView.allowsSelectionDuringEditing = YES;
     
+    [self initialzeViewButtons];
+    
     if (!previewMode)
     {
         _content.date = [NSDate date];
@@ -58,7 +66,7 @@
     [self setManagedObjectContext:nil];
     [self setNameField:nil];
     [self setCommentView:nil];
-    [self setImageView:nil];
+    //[self setImageView:nil];
     [self setImageSelectionSheet:nil];
     [self setCancelActionSheet:nil];
     [self setDelegate:nil];
@@ -145,6 +153,13 @@
     }
 }
 
+#pragma mark - ScrollView Delegate
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
+{
+    [self allResignFirstResponse];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -161,15 +176,15 @@
         } break;
             
         case 1: {
-            return @"Photo";
+            return NSLocalizedString(@"Photo", @"Photo");
         } break;
             
         case 2: {
-            return @"Location";
+            return NSLocalizedString(@"Location", @"Location");
         } break;
             
         default:
-            return @"Comments";
+            return NSLocalizedString(@"Comments", @"Comments");
             break;
     }
 }
@@ -178,7 +193,8 @@
 {
     if (section == 3)
     {
-        return @"Typing symbols like '.', '!' or '?' can start a new paragraph.";
+        return NSLocalizedString(@"Typing symbols like '.', '!' or '?' can start a new paragraph.", @"Comment Tip");
+        ;
     }
     
     return nil;
@@ -210,11 +226,6 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 1) //Image
-    {
-        return BIG_CELL_HEIGHT;
-    }
-    
     if (indexPath.section == 3) //Comment
     {
         return BIG_CELL_HEIGHT;
@@ -230,16 +241,18 @@
     //select image cell
     if (indexPath.section == 1)
     {
-        if ([_content.hasImage boolValue])
+        if (previewMode)
         {
-            //preview image
             [self pushImagePreviewView];
         }
         else
         {
-            if (!previewMode)
+            if ([_content.hasImage boolValue])
             {
-                //camera or image roll
+                [self pushImagePreviewView];
+            }
+            else
+            {
                 [self showImageSelectionSheet];
             }
         }
@@ -259,25 +272,19 @@
 {
     if (!self.imageSelectionSheet)
     {
-        _imageSelectionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Select from Photo Album", @"Take a photo", nil];
+        _imageSelectionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Camera", @"Use camera"), NSLocalizedString(@"Camera Roll", @"Select from camera roll"), nil];
     }
     
     [_imageSelectionSheet showInView:self.view];
 }
 
 - (void)pushImagePreviewView
-{
-    /*
-    ImageViewController *imageController = [[ImageViewController alloc] initWithNibName:@"ImageViewController" bundle:nil];
-    imageController.imageData = _content.image;
+{    
+    MyPhoto *photo = [[MyPhoto alloc] initWithImageURL:nil name:_content.comment image:[UIImage imageWithData:_content.image]];
+    MyPhotoSource *source = [[MyPhotoSource alloc] initWithPhotos:[NSArray arrayWithObjects:photo, nil]];
     
-    [self presentModalViewController:imageController animated:YES];
-     */
-    
-    PreviewViewController *preView = [[PreviewViewController alloc] initWithNibName:@"PreviewViewController" bundle:nil];
-    preView.imageData = _content.image;
-    
-    [self.navigationController pushViewController:preView animated:YES];
+    EGOPhotoViewController *photoController = [[EGOPhotoViewController alloc] initWithPhotoSource:source];
+    [self.navigationController pushViewController:photoController animated:YES];
 }
 
 - (void)pushLocationViewAllowEditing:(BOOL)allow
@@ -346,10 +353,26 @@
     
     if (!cell)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:cellID];
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     }
     
+    cell.textLabel.text = NSLocalizedString(@"Image", @"Image");
+    cell.detailTextLabel.textColor = [UIColor tableViewCellTextBlueColor];
+    
+    if ([_content.hasImage boolValue])
+    {
+        cell.detailTextLabel.text = NSLocalizedString(@"Preview Image", @"Preview image data");
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    else
+    {
+        cell.detailTextLabel.text = NSLocalizedString(@"No Image", @"Content has no image");
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    
+    return cell;
+    /*
     if (!self.imageView)
     {
         double width = PHOTO_WIDTH_LANDSCAPE * IMAGE_HEIGHT / PHOTO_HEIGHT_LANDSCAPE;
@@ -394,6 +417,7 @@
     }
     
     return cell;
+    */
 }
 
 - (UITableViewCell *)cellForImageComment
@@ -548,11 +572,11 @@
         switch (buttonIndex)
         {
             case 0: {
-                [self usePhotoAlbum];
+                [self useCamera];
             } break;
                 
             case 1: {
-                [self useCamera];
+                [self usePhotoAlbum];
             } break;
                 
             default:
@@ -582,7 +606,6 @@
 - (void)deleteContent
 {
     [self.managedObjectContext deleteObject:_content];
-    //[self saveContent];
 }
 
 #pragma mark - Image Picker Delegate Methods
@@ -646,10 +669,12 @@
                                            @selector(image:finishedSavingWithError:contextInfo:),
                                            nil);
         
-        [NSThread detachNewThreadSelector:@selector(useImage:) toTarget:self withObject:image];
+        [self.tableView reloadData];
+        //[NSThread detachNewThreadSelector:@selector(useImage:) toTarget:self withObject:image];
     }
 }
 
+/*
 - (void)useImage:(UIImage *)image {
     
     double width = 0.0;
@@ -686,7 +711,7 @@
     [_imageView setImage:newImage];
     
     [self.tableView reloadData];
-}
+}*/
 
 -(void)image:(UIImage *)image finishedSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
