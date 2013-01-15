@@ -56,6 +56,9 @@
     
     if (!previewMode)
     {
+        NSManagedObjectContext *context = self.managedObjectContext;
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"ImageContent" inManagedObjectContext:context];
+        _content = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
         _content.date = [NSDate date];
     }
 }
@@ -63,10 +66,9 @@
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    [self setManagedObjectContext:nil];
     [self setNameField:nil];
     [self setCommentView:nil];
-    //[self setImageView:nil];
+    [self setManagedObjectContext:nil];
     [self setImageSelectionSheet:nil];
     [self setCancelActionSheet:nil];
     [self setDelegate:nil];
@@ -106,7 +108,7 @@
 {
     if (!self.cancelActionSheet)
     {
-        _cancelActionSheet = [[UIActionSheet alloc] initWithTitle:@"Record will not be saved" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Yes" otherButtonTitles:nil];
+        _cancelActionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Record will not be saved", @"Cancel warning") delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Yes" otherButtonTitles:nil];
     }
     [_cancelActionSheet showInView:self.view];
 }
@@ -115,8 +117,8 @@
 {
     if ([_nameField.text length] != 0 && [_content.hasImage boolValue] && [_content.hasLocation boolValue])
     {
-        [self dismissModalViewControllerAnimated:YES];
         [self saveContent];
+        [self dismissModalViewControllerAnimated:YES];
     }
     else
     {
@@ -257,34 +259,53 @@
             }
         }
     }
-
     
     //select location cell
     if (indexPath.section == 2)
     {
         [self pushLocationViewAllowEditing:previewMode];
     }
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 - (void)showImageSelectionSheet
 {
     if (!self.imageSelectionSheet)
     {
-        _imageSelectionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Camera", @"Use camera"), NSLocalizedString(@"Camera Roll", @"Select from camera roll"), nil];
+        _imageSelectionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Camera", @"Use camera"), NSLocalizedString(@"Photo Album", @"Select from camera roll"), nil];
     }
     
     [_imageSelectionSheet showInView:self.view];
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }
 
 - (void)pushImagePreviewView
-{    
-    MyPhoto *photo = [[MyPhoto alloc] initWithImageURL:nil name:_content.comment image:[UIImage imageWithData:_content.image]];
-    MyPhotoSource *source = [[MyPhotoSource alloc] initWithPhotos:[NSArray arrayWithObjects:photo, nil]];
+{
+    ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *asset)
+    {
+        ALAssetRepresentation *representation = [asset defaultRepresentation];
+        CGImageRef imageRef = [representation fullResolutionImage];
+        if (imageRef)
+        {
+            MyPhoto *photo = [[MyPhoto alloc] initWithImageURL:nil name:nil image:[UIImage imageWithCGImage:imageRef]];
+            MyPhotoSource *source = [[MyPhotoSource alloc] initWithPhotos:[NSArray arrayWithObjects:photo, nil]];
+            
+            EGOPhotoViewController *photoController = [[EGOPhotoViewController alloc] initWithPhotoSource:source];
+            [self.navigationController pushViewController:photoController animated:YES];
+            
+            //[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
+        }
+    };
     
-    EGOPhotoViewController *photoController = [[EGOPhotoViewController alloc] initWithPhotoSource:source];
-    [self.navigationController pushViewController:photoController animated:YES];
+    ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *error)
+    {
+        NSLog(@"%@: %@",[error localizedDescription], [error userInfo]);
+    };
+
+    NSURL *imageURL = [NSURL URLWithString:_content.imagePath];
+    ALAssetsLibrary *assetslibrary = [[ALAssetsLibrary alloc] init];
+    [assetslibrary assetForURL:imageURL
+                   resultBlock:resultblock
+                  failureBlock:failureblock];
 }
 
 - (void)pushLocationViewAllowEditing:(BOOL)allow
@@ -339,13 +360,6 @@
     return cell;
 }
 
-#define IMAGE_HEIGHT            160.0
-
-#define PHOTO_WIDTH_PORTRAIT    320.0
-#define PHOTO_HEIGHT_PORTRAIT   460.0
-#define PHOTO_WIDTH_LANDSCAPE   PHOTO_HEIGHT_PORTRAIT
-#define PHOTO_HEIGHT_LANDSCAPE  PHOTO_WIDTH_PORTRAIT
-
 - (UITableViewCell *)cellForImageView
 {
     static NSString *cellID = @"ImageCell";
@@ -362,7 +376,7 @@
     
     if ([_content.hasImage boolValue])
     {
-        cell.detailTextLabel.text = NSLocalizedString(@"Preview Image", @"Preview image data");
+        cell.detailTextLabel.text = _content.imageName;
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     else
@@ -372,52 +386,6 @@
     }
     
     return cell;
-    /*
-    if (!self.imageView)
-    {
-        double width = PHOTO_WIDTH_LANDSCAPE * IMAGE_HEIGHT / PHOTO_HEIGHT_LANDSCAPE;
-        double x = (PHOTO_WIDTH_PORTRAIT - width) / 2;
-        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(x, 20, width, IMAGE_HEIGHT)];
-        _imageView.contentMode = UIViewContentModeScaleAspectFit;
-        [cell addSubview:_imageView];
-    }
-    
-    if ([_content.hasImage boolValue])
-    {
-        UIImage *image = [UIImage imageWithData:_content.image];
-        
-        double width = 0.0;
-        if (image.size.height > image.size.width)
-        {
-            width = IMAGE_HEIGHT * PHOTO_WIDTH_PORTRAIT / PHOTO_HEIGHT_PORTRAIT;
-        }
-        else
-        {
-            width = PHOTO_WIDTH_LANDSCAPE * IMAGE_HEIGHT / PHOTO_HEIGHT_LANDSCAPE;
-        }
-        
-        CGSize newSize = CGSizeMake(width, IMAGE_HEIGHT);
-        // Create a graphics image context
-        UIGraphicsBeginImageContext(newSize);
-        // Tell the old image to draw in this new context, with the desired
-        // new size
-        [image drawInRect:CGRectMake(0 , 0, newSize.width, newSize.height)];
-        // Get the new image from the context
-        UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-        // End the context
-        UIGraphicsEndImageContext();
-        
-        [_imageView setImage:newImage];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    }
-    else
-    {
-        _imageView.image = [UIImage imageNamed:@"placeholder"];
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }
-    
-    return cell;
-    */
 }
 
 - (UITableViewCell *)cellForImageComment
@@ -605,7 +573,18 @@
 
 - (void)deleteContent
 {
-    [self.managedObjectContext deleteObject:_content];
+    NSManagedObjectContext *context = self.managedObjectContext;
+    
+    [context deleteObject:_content];
+    
+    NSError *error = nil;
+    if (![context save:&error])
+    {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
 }
 
 #pragma mark - Image Picker Delegate Methods
@@ -619,9 +598,8 @@
         pickerView.delegate = self;
         pickerView.sourceType = UIImagePickerControllerSourceTypeCamera;
         pickerView.mediaTypes = [NSArray arrayWithObjects:(NSString *)kUTTypeImage, nil];
-        pickerView.allowsEditing = YES;
+        pickerView.allowsEditing = NO;
         pickerView.showsCameraControls = YES;
-        
         [self presentModalViewController:pickerView animated:YES];
         
         newMedia = YES;
@@ -630,11 +608,11 @@
 
 - (void)usePhotoAlbum
 {
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum])
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])
     {
         UIImagePickerController *pickerView = [[UIImagePickerController alloc] init];
         pickerView.delegate = self;
-        pickerView.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+        pickerView.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         pickerView.mediaTypes = [NSArray arrayWithObjects:(NSString *) kUTTypeImage, nil];
         pickerView.allowsEditing = NO;
         [self presentModalViewController:pickerView animated:YES];
@@ -649,81 +627,65 @@
     picker.delegate = nil;
     
     [picker dismissModalViewControllerAnimated:YES];
-    //[self.navigationController dismissModalViewControllerAnimated:YES];
+    
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     
     if ([mediaType isEqualToString:(NSString *)kUTTypeImage])
     {
-        UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
-        
-        //JPEG format
-        _content.image = UIImageJPEGRepresentation(image, 1.0);
-        
-        //PNG format
-        //_content.image = UIImagePNGRepresentation(image);
-        
-        _content.hasImage = [NSNumber numberWithBool:YES];
-        
         if (newMedia)
-            UIImageWriteToSavedPhotosAlbum(image,
-                                           self,
-                                           @selector(image:finishedSavingWithError:contextInfo:),
-                                           nil);
-        
-        [self.tableView reloadData];
-        //[NSThread detachNewThreadSelector:@selector(useImage:) toTarget:self withObject:image];
+        {
+            UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+            
+            [library writeImageToSavedPhotosAlbum:[image CGImage]
+                                      orientation:(ALAssetOrientation)[image imageOrientation]
+                                  completionBlock:^(NSURL *assetURL, NSError *error)
+            {
+                if (error)
+                {
+                    NSLog(@"%@: %@", [error localizedDescription], [error userInfo]);
+                }
+                else
+                {
+                    _content.hasImage = [NSNumber numberWithBool:YES];
+                    _content.imagePath = [assetURL absoluteString];
+                    NSLog(@"new media url: %@", assetURL);
+                    
+                    [self imageNameWithLibrary:library URL:assetURL];
+                
+                    [self.tableView reloadData];
+                }
+            }];
+        }
+        else
+        {
+            NSURL* localURL = (NSURL *)[info valueForKey:UIImagePickerControllerReferenceURL];
+            _content.hasImage = [NSNumber numberWithBool:YES];
+            _content.imagePath = [localURL absoluteString];
+            
+            [self imageNameWithLibrary:library URL:localURL];
+            [self.tableView reloadData];
+            
+            NSLog(@"library image url: %@", localURL);
+        }
     }
 }
 
-/*
-- (void)useImage:(UIImage *)image {
-    
-    double width = 0.0;
-    if (image.size.height > image.size.width)
-    {
-        width = IMAGE_HEIGHT * PHOTO_WIDTH_PORTRAIT / PHOTO_HEIGHT_PORTRAIT;
-    }
-    else
-    {
-        width = PHOTO_WIDTH_LANDSCAPE * IMAGE_HEIGHT / PHOTO_HEIGHT_LANDSCAPE;
-    }
-    
-    CGSize newSize = CGSizeMake(width, IMAGE_HEIGHT);
-    // Create a graphics image context
-    UIGraphicsBeginImageContext(newSize);
-    // Tell the old image to draw in this new context, with the desired
-    // new size
-    [image drawInRect:CGRectMake(0 , 0, newSize.width, newSize.height)];
-    // Get the new image from the context
-    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-    // End the context
-    UIGraphicsEndImageContext();
-    
-    if (!self.imageView)
-    {
-        //double width = PHOTO_WIDTH_LANDSCAPE * IMAGE_HEIGHT / PHOTO_HEIGHT_LANDSCAPE;
-        //double x = (PHOTO_WIDTH_PORTRAIT - 310) / 2;
-        _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 320, IMAGE_HEIGHT)];
-        _imageView.contentMode = UIViewContentModeScaleAspectFit;
-        _imageView.layer.cornerRadius = 10.0;
-        _imageView.clipsToBounds = YES;
-    }
-    
-    [_imageView setImage:newImage];
-    
-    [self.tableView reloadData];
-}*/
-
--(void)image:(UIImage *)image finishedSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+- (void)imageNameWithLibrary:(ALAssetsLibrary *)library URL:(NSURL *)URL
 {
-    if (error) {
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle: @"Save failed"
-                              message: @"Failed to save image"
-                              delegate:nil
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil];
-        [alert show];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *asset)
+        {
+            _content.imageName = [[asset defaultRepresentation] filename];
+            
+            NSLog(@"%@", _content.imageName);
+            
+            [self.tableView reloadData];
+        };
+        
+        [library assetForURL:URL
+                 resultBlock:resultblock
+                failureBlock:nil];
+    });
 }
 
 #pragma mark - Image Location Controller Delegate
@@ -741,6 +703,7 @@
 - (void)saveContent
 {
     NSManagedObjectContext *context = self.managedObjectContext;
+    
     NSError *error = nil;
     if (![context save:&error])
     {

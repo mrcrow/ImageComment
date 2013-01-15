@@ -100,14 +100,13 @@
 
 - (void)setupButtons
 {
-    MKUserTrackingBarButtonItem *trackingButton = [[MKUserTrackingBarButtonItem alloc] initWithMapView:self.mapView];
-    UIBarButtonItem *locateButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPinToMapView)];
-    //locateButton.style = UIBarButtonItemStyleBordered;
-    UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *typeButton = [[UIBarButtonItem alloc] initWithTitle:@"Map" style:UIBarButtonSystemItemDone target:self action:@selector(showMapTypePop)];
-    
     if (!previewMode)
     {
+        MKUserTrackingBarButtonItem *trackingButton = [[MKUserTrackingBarButtonItem alloc] initWithMapView:self.mapView];
+        UIBarButtonItem *locateButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addPinToMapView)];
+        UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+        UIBarButtonItem *typeButton = [[UIBarButtonItem alloc] initWithTitle:@"Map" style:UIBarButtonSystemItemDone target:self action:@selector(showMapTypePop)];
+        
         [self setToolbarItems:[NSArray arrayWithObjects:space, locateButton, space, nil]];
         [self.navigationController setToolbarHidden:NO animated:YES];
         self.navigationController.toolbar.barStyle = UIBarStyleBlackTranslucent;
@@ -115,6 +114,8 @@
     }
     else
     {
+        UIBarButtonItem *typeButton = [[UIBarButtonItem alloc] initWithTitle:@"Map" style:UIBarButtonSystemItemDone target:self action:@selector(showMapTypePop)];
+        
         [self.navigationController setToolbarHidden:NO animated:YES];
         self.navigationController.toolbar.barStyle = UIBarStyleBlackTranslucent;
          [self.navigationItem setRightBarButtonItems:[NSArray arrayWithObjects:typeButton, nil] animated:YES];
@@ -129,15 +130,6 @@
         pinGesture.minimumPressDuration = 1.0;
         [self.mapView addGestureRecognizer:pinGesture];
     }
-    /*
-    else
-    {
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fullScreenMapView:)];
-        tapGesture.numberOfTapsRequired = 1;
-        tapGesture.numberOfTouchesRequired = 1;
-        
-        [self.mapView addGestureRecognizer:tapGesture];
-    }*/
 }
 
 - (void)fullScreenMapView:(UIGestureRecognizer *)gestureRecognizer
@@ -167,7 +159,7 @@
     MKPointAnnotation *annot = [[MKPointAnnotation alloc] init];
     annot.title = @"Image Location";
     annot.coordinate = touchMapCoordinate;
-    annot.subtitle = [NSString stringWithFormat:@"φ:%.4f, λ:%.4f", annot.coordinate.latitude, annot.coordinate.longitude];
+    annot.subtitle = [NSString stringWithFormat:@"φ:%.4f, λ:%.4f", touchMapCoordinate.latitude, touchMapCoordinate.longitude];
     
     content.hasLocation = [NSNumber numberWithBool:YES];
     content.latitude = [NSNumber numberWithDouble:touchMapCoordinate.latitude];
@@ -185,7 +177,7 @@
     MKPointAnnotation *annot = [[MKPointAnnotation alloc] init];
     annot.title = @"Image Location";
     annot.coordinate = coord;
-    annot.subtitle = [NSString stringWithFormat:@"φ:%.4f, λ:%.4f", annot.coordinate.latitude, annot.coordinate.longitude];
+    annot.subtitle = [NSString stringWithFormat:@"φ:%.4f, λ:%.4f", coord.latitude, coord.longitude];
     
     content.hasLocation = [NSNumber numberWithBool:YES];
     content.latitude = [NSNumber numberWithDouble:coord.latitude];

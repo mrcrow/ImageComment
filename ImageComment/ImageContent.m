@@ -2,7 +2,7 @@
 //  ImageContent.m
 //  ImageComment
 //
-//  Created by Wu Wenzhi on 13-1-8.
+//  Created by Wu Wenzhi on 13-1-14.
 //  Copyright (c) 2013年 Wu Wenzhi. All rights reserved.
 //
 
@@ -11,13 +11,14 @@
 
 @implementation ImageContent
 
+@dynamic comment;
 @dynamic date;
 @dynamic hasImage;
 @dynamic hasLocation;
-@dynamic image;
-@dynamic comment;
+@dynamic imagePath;
 @dynamic latitude;
 @dynamic longitude;
 @dynamic name;
+@dynamic imageName;
 
 @end

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E800F05D169C1E0A0013E4A3 /* ImageContent.m in Sources */ = {isa = PBXBuildFile; fileRef = E800F05C169C1E0A0013E4A3 /* ImageContent.m */; };
 		E853C34A1683562A00BDC3F3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E853C3491683562A00BDC3F3 /* UIKit.framework */; };
 		E853C34C1683562A00BDC3F3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E853C34B1683562A00BDC3F3 /* Foundation.framework */; };
 		E853C34E1683562A00BDC3F3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E853C34D1683562A00BDC3F3 /* CoreGraphics.framework */; };
@@ -60,16 +59,14 @@
 		E86FF3D616A154C80046BA2A /* MyPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF3CA16A154900046BA2A /* MyPhoto.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E86FF3D716A154C80046BA2A /* MyPhotoSource.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF3CC16A154900046BA2A /* MyPhotoSource.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E86FF3D916A155F90046BA2A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E86FF3D816A155F90046BA2A /* MessageUI.framework */; };
-		E8972D76169EA190003686D1 /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8972D74169EA190003686D1 /* PreviewViewController.m */; };
-		E8972D77169EA190003686D1 /* PreviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E8972D75169EA190003686D1 /* PreviewViewController.xib */; };
+		E89C7B8916A44EBB00C6C0B8 /* ImageContent.m in Sources */ = {isa = PBXBuildFile; fileRef = E89C7B8816A44EBB00C6C0B8 /* ImageContent.m */; };
+		E8D4A2D616A40D0E00D44350 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8D4A2D516A40D0E00D44350 /* AssetsLibrary.framework */; };
 		E8EBD0BC169ACF1C000D118F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8EBD0BB169ACF1C000D118F /* MobileCoreServices.framework */; };
 		E8EBD0C2169BC0DD000D118F /* ColorExtention.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3D116860EC300BDC3F3 /* ColorExtention.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E800F05B169C1E0A0013E4A3 /* ImageContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageContent.h; sourceTree = "<group>"; };
-		E800F05C169C1E0A0013E4A3 /* ImageContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageContent.m; sourceTree = "<group>"; };
-		E853C3451683562A00BDC3F3 /* ImageComment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageComment.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E853C3451683562A00BDC3F3 /* LocateImage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocateImage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E853C3491683562A00BDC3F3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E853C34B1683562A00BDC3F3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E853C34D1683562A00BDC3F3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -151,9 +148,9 @@
 		E86FF3CB16A154900046BA2A /* MyPhotoSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPhotoSource.h; sourceTree = "<group>"; };
 		E86FF3CC16A154900046BA2A /* MyPhotoSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyPhotoSource.m; sourceTree = "<group>"; };
 		E86FF3D816A155F90046BA2A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		E8972D73169EA190003686D1 /* PreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreviewViewController.h; sourceTree = "<group>"; };
-		E8972D74169EA190003686D1 /* PreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewViewController.m; sourceTree = "<group>"; };
-		E8972D75169EA190003686D1 /* PreviewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreviewViewController.xib; sourceTree = "<group>"; };
+		E89C7B8716A44EBB00C6C0B8 /* ImageContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageContent.h; sourceTree = "<group>"; };
+		E89C7B8816A44EBB00C6C0B8 /* ImageContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageContent.m; sourceTree = "<group>"; };
+		E8D4A2D516A40D0E00D44350 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		E8EBD0BB169ACF1C000D118F /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -162,6 +159,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8D4A2D616A40D0E00D44350 /* AssetsLibrary.framework in Frameworks */,
 				E86FF3D916A155F90046BA2A /* MessageUI.framework in Frameworks */,
 				E8EBD0BC169ACF1C000D118F /* MobileCoreServices.framework in Frameworks */,
 				E86AEF7C168B5EC6002234FE /* QuartzCore.framework in Frameworks */,
@@ -199,7 +197,7 @@
 		E853C3461683562A00BDC3F3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E853C3451683562A00BDC3F3 /* ImageComment.app */,
+				E853C3451683562A00BDC3F3 /* LocateImage.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -207,6 +205,7 @@
 		E853C3481683562A00BDC3F3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E8D4A2D516A40D0E00D44350 /* AssetsLibrary.framework */,
 				E86FF3D816A155F90046BA2A /* MessageUI.framework */,
 				E8EBD0BB169ACF1C000D118F /* MobileCoreServices.framework */,
 				E86AEF7B168B5EC6002234FE /* QuartzCore.framework */,
@@ -241,6 +240,10 @@
 		E853C3521683562A00BDC3F3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E853C3591683562A00BDC3F3 /* ImageComment-Prefix.pch */,
+				E853C3571683562A00BDC3F3 /* main.m */,
+				E853C3541683562A00BDC3F3 /* InfoPlist.strings */,
+				E853C3531683562A00BDC3F3 /* ImageComment-Info.plist */,
 				E86AEF65168A02F2002234FE /* success.png */,
 				E86AEF66168A02F2002234FE /* success@2x.png */,
 				E86AEF6A168A0332002234FE /* target.png */,
@@ -248,10 +251,6 @@
 				E853C35D1683562A00BDC3F3 /* Default.png */,
 				E853C35F1683562A00BDC3F3 /* Default@2x.png */,
 				E853C3611683562A00BDC3F3 /* Default-568h@2x.png */,
-				E853C3531683562A00BDC3F3 /* ImageComment-Info.plist */,
-				E853C3541683562A00BDC3F3 /* InfoPlist.strings */,
-				E853C3571683562A00BDC3F3 /* main.m */,
-				E853C3591683562A00BDC3F3 /* ImageComment-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -260,8 +259,8 @@
 			isa = PBXGroup;
 			children = (
 				E853C3631683562A00BDC3F3 /* ImageComment.xcdatamodeld */,
-				E800F05B169C1E0A0013E4A3 /* ImageContent.h */,
-				E800F05C169C1E0A0013E4A3 /* ImageContent.m */,
+				E89C7B8716A44EBB00C6C0B8 /* ImageContent.h */,
+				E89C7B8816A44EBB00C6C0B8 /* ImageContent.m */,
 			);
 			name = "Data Modal";
 			sourceTree = "<group>";
@@ -271,10 +270,7 @@
 			children = (
 				E853C3A916841DC500BDC3F3 /* ImageLocationController.h */,
 				E853C3AA16841DC600BDC3F3 /* ImageLocationController.m */,
-				E8972D73169EA190003686D1 /* PreviewViewController.h */,
-				E8972D74169EA190003686D1 /* PreviewViewController.m */,
 				E853C3AB16841DC700BDC3F3 /* ImageLocationController.xib */,
-				E8972D75169EA190003686D1 /* PreviewViewController.xib */,
 			);
 			name = "Content Attributes";
 			sourceTree = "<group>";
@@ -482,9 +478,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E853C3441683562A00BDC3F3 /* ImageComment */ = {
+		E853C3441683562A00BDC3F3 /* LocateImage */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E853C3741683562B00BDC3F3 /* Build configuration list for PBXNativeTarget "ImageComment" */;
+			buildConfigurationList = E853C3741683562B00BDC3F3 /* Build configuration list for PBXNativeTarget "LocateImage" */;
 			buildPhases = (
 				E853C3411683562A00BDC3F3 /* Sources */,
 				E853C3421683562A00BDC3F3 /* Frameworks */,
@@ -494,9 +490,9 @@
 			);
 			dependencies = (
 			);
-			name = ImageComment;
+			name = LocateImage;
 			productName = ImageComment;
-			productReference = E853C3451683562A00BDC3F3 /* ImageComment.app */;
+			productReference = E853C3451683562A00BDC3F3 /* LocateImage.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -520,7 +516,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E853C3441683562A00BDC3F3 /* ImageComment */,
+				E853C3441683562A00BDC3F3 /* LocateImage */,
 			);
 		};
 /* End PBXProject section */
@@ -540,7 +536,6 @@
 				E86AEF68168A02F2002234FE /* success@2x.png in Resources */,
 				E86AEF6C168A0332002234FE /* target.png in Resources */,
 				E86AEF6D168A0332002234FE /* target@2x.png in Resources */,
-				E8972D77169EA190003686D1 /* PreviewViewController.xib in Resources */,
 				E86FF3AC16A128A40046BA2A /* egopv_error_placeholder.png in Resources */,
 				E86FF3AD16A128A40046BA2A /* egopv_error_placeholder@2x.png in Resources */,
 				E86FF3AE16A128A40046BA2A /* egopv_fullscreen_button.png in Resources */,
@@ -586,8 +581,7 @@
 				E853C3651683562A00BDC3F3 /* ImageComment.xcdatamodeld in Sources */,
 				E853C3681683562A00BDC3F3 /* ImageListController.m in Sources */,
 				E853C3AC16841DC700BDC3F3 /* ImageLocationController.m in Sources */,
-				E800F05D169C1E0A0013E4A3 /* ImageContent.m in Sources */,
-				E8972D76169EA190003686D1 /* PreviewViewController.m in Sources */,
+				E89C7B8916A44EBB00C6C0B8 /* ImageContent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -699,7 +693,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E853C3741683562B00BDC3F3 /* Build configuration list for PBXNativeTarget "ImageComment" */ = {
+		E853C3741683562B00BDC3F3 /* Build configuration list for PBXNativeTarget "LocateImage" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E853C3751683562B00BDC3F3 /* Debug */,

@@ -3,6 +3,8 @@
 //
 
 #import <Availability.h>
+#import "ColorExtention.h"
+#import "ImageContent.h"
 
 #ifndef __IPHONE_4_0
 #warning "This project uses features only available in iOS SDK 4.0 and later."

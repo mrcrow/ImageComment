@@ -8,11 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 #import <QuartzCore/QuartzCore.h>
-#import "ImageContent.h"
-#import "ColorExtention.h"
 #import "ImageLocationController.h"
-#import "PreviewViewController.h"
 
 @protocol ImageManagerControllerDelegate;
 

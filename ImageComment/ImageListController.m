@@ -8,16 +8,20 @@
 
 #import "ImageListController.h"
 #import "ImageViewController.h"
-#import "PreviewViewController.h"
 #import "EGOPhotoGlobal.h"
 #import "MyPhoto.h"
 #import "MyPhotoSource.h"
 
 @interface ImageListController ()
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+@property                       BOOL            searchWasActive;
+@property (strong, nonatomic)   NSMutableArray  *searchedObjects;
+
+- (void)tableView:(UITableView *)tableView configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 @end
 
 @implementation ImageListController
+@synthesize fetchedResultsController = _fetchedResultsController;
+@synthesize searchedObjects = _searchedObjects, searchWasActive;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,24 +40,31 @@
 
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertImageContent:)];
     self.navigationItem.rightBarButtonItem = addButton;
+    
+    self.searchedObjects = [NSMutableArray arrayWithCapacity:[[self.fetchedResultsController fetchedObjects] count]];
 }
  
 - (void)didReceiveMemoryWarning
 {
+    self.searchWasActive = [self.searchDisplayController isActive];
+    self.fetchedResultsController.delegate = nil;
+    self.fetchedResultsController = nil;
+    
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (void)insertImageContent:(id)sender
+- (void)viewDidDisappear:(BOOL)animated
 {
-    NSManagedObjectContext *context = self.managedObjectContext;
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ImageContent" inManagedObjectContext:context];
-    ImageContent *imageContent = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-    
+    // save the state of the search UI so that it can be restored if the view is re-created
+    self.searchWasActive = [self.searchDisplayController isActive];
+}
+
+- (void)insertImageContent:(id)sender
+{     
     ImageManageController *manageController = [[ImageManageController alloc] initWithStyle:UITableViewStyleGrouped];
     manageController.delegate = self;
     manageController.managedObjectContext = self.managedObjectContext;
-    manageController.content = imageContent;
     manageController.previewMode = NO;
     
     UINavigationController *addImageNavigator = [[UINavigationController alloc] initWithRootViewController:manageController];
@@ -61,22 +72,44 @@
     [self presentModalViewController:addImageNavigator animated:YES];
 }
 
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    [self setFetchedResultsController:nil];
+    [self setManagedObjectContext:nil];
+    [self setSearchedObjects:nil];
+}
+
 #pragma mark - Table View
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return [[self.fetchedResultsController sections] count];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-    return [sectionInfo numberOfObjects];
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 58.0;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    if (tableView == self.tableView)
+    {
+        return [[self.fetchedResultsController sections] count];
+    }
+    else
+    {
+        return 1;
+    }
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (tableView == self.tableView)
+    {
+        id <NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections] objectAtIndex:section];
+        return [sectionInfo numberOfObjects];
+    }
+    else
+    {
+        return [self.searchedObjects count];
+    }
 }
 
 // Customize the appearance of table view cells.
@@ -95,14 +128,28 @@
         [cell addGestureRecognizer:previewGesture];
     }
     
-    [self configureCell:cell atIndexPath:indexPath];
+    [self tableView:tableView configureCell:cell atIndexPath:indexPath];
+    
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView == self.tableView)
+    {
+        ImageContent *imageContent = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        cell.textLabel.text = imageContent.name;
+    }
+    else
+    {
+        ImageContent *imageContent = [self.searchedObjects objectAtIndex:indexPath.row];
+        cell.textLabel.text = imageContent.name;
+    }
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    return tableView == self.tableView ? YES : NO;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -129,12 +176,7 @@
     return NO;
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
-    ImageContent *imageContent = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    
-    cell.textLabel.text = imageContent.name;
-}
+#pragma mark - Preview and Selection
 
 - (void)previewContent:(UILongPressGestureRecognizer *)gesture
 {
@@ -143,36 +185,56 @@
         return;
     }
 
-    NSIndexPath *selectedRow = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
-
-    ImageContent *imageContent = [self.fetchedResultsController objectAtIndexPath:selectedRow];
-
-    MyPhoto *photo = [[MyPhoto alloc] initWithImageURL:nil name:imageContent.comment image:[UIImage imageWithData:imageContent.image]];
-    MyPhotoSource *source = [[MyPhotoSource alloc] initWithPhotos:[NSArray arrayWithObjects:photo, nil]];
-
-    EGOPhotoViewController *photoController = [[EGOPhotoViewController alloc] initWithPhotoSource:source];
-
-    [self.navigationController pushViewController:photoController animated:YES];
-}
-
-/*
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-    ImageContent *imageContent = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    ImageContent *imageContent = nil;
+    if ([self.searchDisplayController isActive])
+    {
+        NSInteger selectedRow = [self.searchDisplayController.searchResultsTableView indexPathForRowAtPoint:[gesture locationInView:self.searchDisplayController.searchResultsTableView]].row;
+        imageContent = [self.searchedObjects objectAtIndex:selectedRow];
+    }
+    else
+    {
+        NSIndexPath *selectedPath = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
+        imageContent = [self.fetchedResultsController objectAtIndexPath:selectedPath];
+    }
     
-    ImageManageController *manageController = [[ImageManageController alloc] initWithStyle:UITableViewStyleGrouped];
-    manageController.managedObjectContext = self.managedObjectContext;
-    manageController.content = imageContent;
+    ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *asset)
+    {
+        ALAssetRepresentation *representation = [asset defaultRepresentation];
+        CGImageRef imageRef = [representation fullResolutionImage];
+        if (imageRef)
+        {
+            MyPhoto *photo = [[MyPhoto alloc] initWithImageURL:nil name:imageContent.comment image:[UIImage imageWithCGImage:imageRef]];
+            MyPhotoSource *source = [[MyPhotoSource alloc] initWithPhotos:[NSArray arrayWithObjects:photo, nil]];
+            
+            EGOPhotoViewController *photoController = [[EGOPhotoViewController alloc] initWithPhotoSource:source];
+            [self.navigationController pushViewController:photoController animated:YES];
+        }
+    };
     
-    manageController.previewMode = YES;
-    [manageController initialzeViewButtons];
-    [self.navigationController pushViewController:manageController animated:YES];
+    ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *error)
+    {
+        NSLog(@"%@: %@",[error localizedDescription], [error userInfo]);
+    };
+    
+    NSURL *imageURL = [NSURL URLWithString:imageContent.imagePath];
+    ALAssetsLibrary *assetslibrary = [[ALAssetsLibrary alloc] init];
+    [assetslibrary assetForURL:imageURL
+                   resultBlock:resultblock
+                  failureBlock:failureblock];
 }
-*/
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ImageContent *imageContent = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    ImageContent *imageContent = nil;
+    
+    if (tableView == self.tableView)
+    {
+        imageContent = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    }
+    else
+    {
+        imageContent = [self.searchedObjects objectAtIndex:indexPath.row];
+    }
     
     ImageManageController *manageController = [[ImageManageController alloc] initWithStyle:UITableViewStyleGrouped];
     manageController.managedObjectContext = self.managedObjectContext;
@@ -231,14 +293,16 @@
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
 {
+    UITableView *tableView = self.tableView;
+    
     switch(type)
     {
         case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
             
         case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            [tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
     }
 }
@@ -248,7 +312,6 @@
       newIndexPath:(NSIndexPath *)newIndexPath
 {
     UITableView *tableView = self.tableView;
-    
     switch(type)
     {
         case NSFetchedResultsChangeInsert:
@@ -260,7 +323,7 @@
             break;
             
         case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            [self tableView:tableView configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
             
         case NSFetchedResultsChangeMove:
@@ -272,7 +335,45 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    [self.tableView endUpdates];
+    UITableView *tableView = controller == self.fetchedResultsController ? self.tableView : self.searchDisplayController.searchResultsTableView;
+    [tableView endUpdates];
+}
+
+#pragma mark Search Display Controller
+
+- (void)filterContentForSearchText:(NSString*)searchText scope:(NSInteger)scope
+{
+	[self.searchedObjects removeAllObjects]; 
+	
+    for (ImageContent *content in [self.fetchedResultsController fetchedObjects])
+    {
+        NSComparisonResult nameCompare = [content.name compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
+        
+         NSComparisonResult commentCompare = [content.comment compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
+        
+        if (nameCompare == NSOrderedSame || commentCompare == NSOrderedSame)
+        {
+            [self.searchedObjects addObject:content];
+        }
+    }
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self filterContentForSearchText:searchString
+                               scope:[self.searchDisplayController.searchBar selectedScopeButtonIndex]];
+    
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
+{
+    [self filterContentForSearchText:[self.searchDisplayController.searchBar text]
+                               scope:[self.searchDisplayController.searchBar selectedScopeButtonIndex]];
+    
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
 }
 
 #pragma mark - ImageManageController Delegate
