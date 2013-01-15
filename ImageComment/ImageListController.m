@@ -84,7 +84,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 58.0;
+    return 65.0;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -139,11 +139,17 @@
     {
         ImageContent *imageContent = [self.fetchedResultsController objectAtIndexPath:indexPath];
         cell.textLabel.text = imageContent.name;
+        cell.detailTextLabel.text = imageContent.comment;
+        cell.detailTextLabel.numberOfLines = 2;
+        cell.detailTextLabel.lineBreakMode = UILineBreakModeTailTruncation;
     }
     else
     {
         ImageContent *imageContent = [self.searchedObjects objectAtIndex:indexPath.row];
         cell.textLabel.text = imageContent.name;
+        cell.detailTextLabel.text = imageContent.comment;
+        cell.detailTextLabel.numberOfLines = 2;
+        cell.detailTextLabel.lineBreakMode = UILineBreakModeTailTruncation;
     }
 }
 
