@@ -9,8 +9,8 @@
 #import "ImageListController.h"
 #import "ImageViewController.h"
 #import "EGOPhotoGlobal.h"
-#import "MyPhoto.h"
-#import "MyPhotoSource.h"
+#import "Photo.h"
+#import "PhotoStack.h"
 
 @interface ImageListController ()
 @property                       BOOL            searchWasActive;
@@ -162,8 +162,16 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
+        ImageContent *content = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        
+        if ([[NSFileManager defaultManager] fileExistsAtPath:content.folderPath])
+        {
+            [[NSFileManager defaultManager] removeItemAtPath:content.folderPath error:NULL];
+            NSLog(@"delete image folder at path: %@", content.folderPath);
+        }
+        
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        [context deleteObject:content];
         
         NSError *error = nil;
         if (![context save:&error])
@@ -203,30 +211,11 @@
         imageContent = [self.fetchedResultsController objectAtIndexPath:selectedPath];
     }
     
-    ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *asset)
-    {
-        ALAssetRepresentation *representation = [asset defaultRepresentation];
-        CGImageRef imageRef = [representation fullResolutionImage];
-        if (imageRef)
-        {
-            MyPhoto *photo = [[MyPhoto alloc] initWithImageURL:nil name:imageContent.comment image:[UIImage imageWithCGImage:imageRef]];
-            MyPhotoSource *source = [[MyPhotoSource alloc] initWithPhotos:[NSArray arrayWithObjects:photo, nil]];
-            
-            EGOPhotoViewController *photoController = [[EGOPhotoViewController alloc] initWithPhotoSource:source];
-            [self.navigationController pushViewController:photoController animated:YES];
-        }
-    };
+    Photo *photo = [[Photo alloc] initWithLocalPhotoPath:imageContent.imagePath name:imageContent.imageName];
+
+    EGOPhotoViewController *viewController = [[EGOPhotoViewController alloc] initWithPhoto:photo];
     
-    ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *error)
-    {
-        NSLog(@"%@: %@",[error localizedDescription], [error userInfo]);
-    };
-    
-    NSURL *imageURL = [NSURL URLWithString:imageContent.imagePath];
-    ALAssetsLibrary *assetslibrary = [[ALAssetsLibrary alloc] init];
-    [assetslibrary assetForURL:imageURL
-                   resultBlock:resultblock
-                  failureBlock:failureblock];
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

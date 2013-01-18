@@ -8,9 +8,9 @@
 
 #import "ImageManageController.h"
 #import "EGOPhotoGlobal.h"
-#import "MyPhoto.h"
-#import "MyPhotoSource.h"
-       
+#import "Photo.h"
+#import "PhotoStack.h"
+
 #define BIG_CELL_HEIGHT 200.0
 #define SMALL_CELL_HEIGHT 58.0
 
@@ -56,10 +56,7 @@
     
     if (!previewMode)
     {
-        NSManagedObjectContext *context = self.managedObjectContext;
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"ImageContent" inManagedObjectContext:context];
-        _content = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-        _content.date = [NSDate date];
+        [self createImageObjectAndFolder];
     }
 }
 
@@ -68,7 +65,6 @@
     [super viewDidUnload];
     [self setNameField:nil];
     [self setCommentView:nil];
-    [self setManagedObjectContext:nil];
     [self setImageSelectionSheet:nil];
     [self setCancelActionSheet:nil];
     [self setDelegate:nil];
@@ -84,6 +80,31 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Image Object and Folder
+
+- (void)createImageObjectAndFolder
+{
+    NSManagedObjectContext *context = self.managedObjectContext;
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ImageContent" inManagedObjectContext:context];
+    _content = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
+    _content.date = [NSDate date];
+    _content.folderPath = [IMAGE_BOX_PATH stringByAppendingPathComponent:[self stringFromDate:_content.date]];
+    
+    NSLog(@"created image folder at path: %@", _content.folderPath);
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:_content.folderPath])
+    {
+        [[NSFileManager defaultManager] createDirectoryAtPath:_content.folderPath withIntermediateDirectories:NO attributes:nil error:NULL];
+    }
+}
+
+- (NSString *)stringFromDate:(NSDate *)date
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyyMMddHHmmss"];
+    return [formatter stringFromDate:date];
 }
 
 #pragma mark - Button functions
@@ -280,32 +301,10 @@
 
 - (void)pushImagePreviewView
 {
-    ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *asset)
-    {
-        ALAssetRepresentation *representation = [asset defaultRepresentation];
-        CGImageRef imageRef = [representation fullResolutionImage];
-        if (imageRef)
-        {
-            MyPhoto *photo = [[MyPhoto alloc] initWithImageURL:nil name:nil image:[UIImage imageWithCGImage:imageRef]];
-            MyPhotoSource *source = [[MyPhotoSource alloc] initWithPhotos:[NSArray arrayWithObjects:photo, nil]];
-            
-            EGOPhotoViewController *photoController = [[EGOPhotoViewController alloc] initWithPhotoSource:source];
-            [self.navigationController pushViewController:photoController animated:YES];
-            
-            //[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
-        }
-    };
-    
-    ALAssetsLibraryAccessFailureBlock failureblock  = ^(NSError *error)
-    {
-        NSLog(@"%@: %@",[error localizedDescription], [error userInfo]);
-    };
+    Photo *photo = [[Photo alloc] initWithLocalPhotoPath:_content.imagePath name:_content.imageName];
 
-    NSURL *imageURL = [NSURL URLWithString:_content.imagePath];
-    ALAssetsLibrary *assetslibrary = [[ALAssetsLibrary alloc] init];
-    [assetslibrary assetForURL:imageURL
-                   resultBlock:resultblock
-                  failureBlock:failureblock];
+    EGOPhotoViewController *photoController = [[EGOPhotoViewController alloc] initWithPhoto:photo];
+    [self.navigationController pushViewController:photoController animated:YES];
 }
 
 - (void)pushLocationViewAllowEditing:(BOOL)allow
@@ -335,7 +334,7 @@
     
     if (!self.nameField)
     {
-        self.nameField = [[UITextField alloc] initWithFrame:CGRectMake(20, 8, 285, 30)];
+        self.nameField = [[UITextField alloc] initWithFrame:CGRectMake(15, 8, 290, 30)];
         _nameField.delegate = self;
         _nameField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         _nameField.placeholder = @"Name";
@@ -346,6 +345,10 @@
         self.nameField.enabled = !previewMode;
     }
     
+    _nameField.textAlignment = UITextAlignmentCenter;
+    
+#warning comment here
+    /*
     if ([_content.name length] != 0)
     {
         _nameField.textAlignment = UITextAlignmentCenter;
@@ -353,7 +356,8 @@
     else
     {
         _nameField.textAlignment = UITextAlignmentLeft;
-    }
+    }*/
+    
     _nameField.text = _content.name;
     [cell addSubview:self.nameField];
     
@@ -483,6 +487,8 @@
 {
     _content.name = textField.text;
     
+#warning comment here
+    /*
     if ([textField.text length] != 0)
     {
         textField.textAlignment = UITextAlignmentCenter;
@@ -490,7 +496,7 @@
     else
     {
         textField.textAlignment = UITextAlignmentLeft;
-    }
+    }*/
 }
 
 - (BOOL)enableEnterKeyForTextView:(UITextView *)view
@@ -573,8 +579,16 @@
 
 - (void)deleteContent
 {
-    NSManagedObjectContext *context = self.managedObjectContext;
+    //remove image folder
+    if ([[NSFileManager defaultManager] fileExistsAtPath:_content.folderPath])
+    {
+        [[NSFileManager defaultManager] removeItemAtPath:_content.folderPath error:NULL];
+    }
     
+    NSLog(@"delete image folder at path: %@", _content.folderPath);
+    
+    //delete image item in database
+    NSManagedObjectContext *context = self.managedObjectContext;
     [context deleteObject:_content];
     
     NSError *error = nil;
@@ -624,68 +638,60 @@
 {
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     
+    [picker dismissViewControllerAnimated:YES completion:nil];
     picker.delegate = nil;
-    
-    [picker dismissModalViewControllerAnimated:YES];
-    
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
     
     if ([mediaType isEqualToString:(NSString *)kUTTypeImage])
     {
+        //get image and storage path
+        UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+        NSString *path = [[_content.folderPath stringByAppendingPathComponent:[self stringFromDate:[NSDate date]]] stringByAppendingPathExtension:@"jpeg"];
+        NSLog(@"image should save to path: %@", path);
+        
+        //empty the images in folder
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSArray *folderContents = [fileManager contentsOfDirectoryAtPath:_content.folderPath error:NULL];
+        
+        if ([folderContents count] != 0)
+        {
+            
+            for (NSString *pathComponent in folderContents)
+            {
+                NSString *filePath = [_content.folderPath stringByAppendingPathComponent:pathComponent];
+                NSLog(@"file at path: %@",filePath);
+                
+                if ([fileManager fileExistsAtPath:filePath])
+                {
+                    [fileManager removeItemAtPath:filePath error:NULL];
+                }
+            }
+        }
+        
+        //create image to folder
+        [fileManager createFileAtPath:path contents:UIImageJPEGRepresentation(image, 1.0) attributes:nil];
+        _content.imageName = [[path pathComponents] lastObject];
+        _content.imagePath = path;
+        _content.hasImage = [NSNumber numberWithBool:YES];
+        
         if (newMedia)
         {
-            UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
-            
-            [library writeImageToSavedPhotosAlbum:[image CGImage]
-                                      orientation:(ALAssetOrientation)[image imageOrientation]
-                                  completionBlock:^(NSURL *assetURL, NSError *error)
-            {
-                if (error)
-                {
-                    NSLog(@"%@: %@", [error localizedDescription], [error userInfo]);
-                }
-                else
-                {
-                    _content.hasImage = [NSNumber numberWithBool:YES];
-                    _content.imagePath = [assetURL absoluteString];
-                    NSLog(@"new media url: %@", assetURL);
-                    
-                    [self imageNameWithLibrary:library URL:assetURL];
-                
-                    [self.tableView reloadData];
-                }
-            }];
+            UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:finishedSavingWithError:contextInfo:), NULL);
         }
-        else
-        {
-            NSURL* localURL = (NSURL *)[info valueForKey:UIImagePickerControllerReferenceURL];
-            _content.hasImage = [NSNumber numberWithBool:YES];
-            _content.imagePath = [localURL absoluteString];
-            
-            [self imageNameWithLibrary:library URL:localURL];
-            [self.tableView reloadData];
-            
-            NSLog(@"library image url: %@", localURL);
-        }
+        
+        [self.tableView reloadData];
     }
 }
 
-- (void)imageNameWithLibrary:(ALAssetsLibrary *)library URL:(NSURL *)URL
+-(void)image:(UIImage *)image finishedSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *asset)
-        {
-            _content.imageName = [[asset defaultRepresentation] filename];
-            
-            NSLog(@"%@", _content.imageName);
-            
-            [self.tableView reloadData];
-        };
-        
-        [library assetForURL:URL
-                 resultBlock:resultblock
-                failureBlock:nil];
-    });
+    if (error) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Warning"
+                                                        message:[NSString stringWithFormat:@"Failed to save the captured image into Photo Album, please check image at file path: %@", _content.folderPath]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
 }
 
 #pragma mark - Image Location Controller Delegate

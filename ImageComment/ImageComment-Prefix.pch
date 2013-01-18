@@ -6,6 +6,8 @@
 #import "ColorExtention.h"
 #import "ImageContent.h"
 
+#define IMAGE_BOX_PATH [[[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] path] stringByAppendingPathComponent:@"ImageBox"]
+
 #ifndef __IPHONE_4_0
 #warning "This project uses features only available in iOS SDK 4.0 and later."
 #endif

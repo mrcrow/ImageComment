@@ -26,7 +26,23 @@
     masterViewController.managedObjectContext = self.managedObjectContext;
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
+    
+    [self imageBoxExistanceChecking];
+    
     return YES;
+}
+
+- (void)imageBoxExistanceChecking
+{
+    NSLog(@"ImageBox path: %@", IMAGE_BOX_PATH);
+    if (![[NSFileManager defaultManager] fileExistsAtPath:IMAGE_BOX_PATH])
+    {
+        NSLog(@"ImageBox directory is not exist, then create it.");
+        [[NSFileManager defaultManager] createDirectoryAtPath:IMAGE_BOX_PATH
+                                  withIntermediateDirectories:NO
+                                                   attributes:nil
+                                                        error:NULL];
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

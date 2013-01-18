@@ -59,10 +59,12 @@
 		E86FF3D616A154C80046BA2A /* MyPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF3CA16A154900046BA2A /* MyPhoto.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E86FF3D716A154C80046BA2A /* MyPhotoSource.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF3CC16A154900046BA2A /* MyPhotoSource.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E86FF3D916A155F90046BA2A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E86FF3D816A155F90046BA2A /* MessageUI.framework */; };
-		E89C7B8916A44EBB00C6C0B8 /* ImageContent.m in Sources */ = {isa = PBXBuildFile; fileRef = E89C7B8816A44EBB00C6C0B8 /* ImageContent.m */; };
 		E8D4A2D616A40D0E00D44350 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8D4A2D516A40D0E00D44350 /* AssetsLibrary.framework */; };
 		E8EBD0BC169ACF1C000D118F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8EBD0BB169ACF1C000D118F /* MobileCoreServices.framework */; };
 		E8EBD0C2169BC0DD000D118F /* ColorExtention.m in Sources */ = {isa = PBXBuildFile; fileRef = E853C3D116860EC300BDC3F3 /* ColorExtention.m */; };
+		E8F5C0E416A53BF60071DCB2 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F5C0E316A53BF60071DCB2 /* Photo.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E8F5C10416A70D930071DCB2 /* PhotoStack.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F5C10316A70D920071DCB2 /* PhotoStack.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E8F5C12616A847180071DCB2 /* ImageContent.m in Sources */ = {isa = PBXBuildFile; fileRef = E8F5C12516A847180071DCB2 /* ImageContent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -148,10 +150,14 @@
 		E86FF3CB16A154900046BA2A /* MyPhotoSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPhotoSource.h; sourceTree = "<group>"; };
 		E86FF3CC16A154900046BA2A /* MyPhotoSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyPhotoSource.m; sourceTree = "<group>"; };
 		E86FF3D816A155F90046BA2A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		E89C7B8716A44EBB00C6C0B8 /* ImageContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageContent.h; sourceTree = "<group>"; };
-		E89C7B8816A44EBB00C6C0B8 /* ImageContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageContent.m; sourceTree = "<group>"; };
 		E8D4A2D516A40D0E00D44350 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		E8EBD0BB169ACF1C000D118F /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		E8F5C0E216A53BF60071DCB2 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
+		E8F5C0E316A53BF60071DCB2 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photo.m; sourceTree = "<group>"; };
+		E8F5C10216A70D900071DCB2 /* PhotoStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoStack.h; sourceTree = "<group>"; };
+		E8F5C10316A70D920071DCB2 /* PhotoStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoStack.m; sourceTree = "<group>"; };
+		E8F5C12416A847180071DCB2 /* ImageContent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageContent.h; sourceTree = "<group>"; };
+		E8F5C12516A847180071DCB2 /* ImageContent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageContent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,14 +181,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E825C091169D0E3C00EE5DDB /* Image Content  */ = {
+		E825C091169D0E3C00EE5DDB /* Image Manager */ = {
 			isa = PBXGroup;
 			children = (
 				E853C38916836C4700BDC3F3 /* ImageManageController.h */,
 				E853C38A16836C4700BDC3F3 /* ImageManageController.m */,
 				E853C38B16836C4800BDC3F3 /* ImageManageController.xib */,
 			);
-			name = "Image Content ";
+			name = "Image Manager";
 			sourceTree = "<group>";
 		};
 		E853C33A1683562A00BDC3F3 = {
@@ -229,8 +235,8 @@
 				E853C35B1683562A00BDC3F3 /* AppDelegate.m */,
 				E86FF3C816A154830046BA2A /* Photo Modal */,
 				E86FF3C716A154510046BA2A /* Image List */,
-				E825C091169D0E3C00EE5DDB /* Image Content  */,
-				E853C3B216856CFB00BDC3F3 /* Content Attributes */,
+				E825C091169D0E3C00EE5DDB /* Image Manager */,
+				E853C3B216856CFB00BDC3F3 /* Image Location */,
 				E853C38516835E4900BDC3F3 /* Data Modal */,
 				E853C3521683562A00BDC3F3 /* Supporting Files */,
 			);
@@ -259,20 +265,20 @@
 			isa = PBXGroup;
 			children = (
 				E853C3631683562A00BDC3F3 /* ImageComment.xcdatamodeld */,
-				E89C7B8716A44EBB00C6C0B8 /* ImageContent.h */,
-				E89C7B8816A44EBB00C6C0B8 /* ImageContent.m */,
+				E8F5C12416A847180071DCB2 /* ImageContent.h */,
+				E8F5C12516A847180071DCB2 /* ImageContent.m */,
 			);
 			name = "Data Modal";
 			sourceTree = "<group>";
 		};
-		E853C3B216856CFB00BDC3F3 /* Content Attributes */ = {
+		E853C3B216856CFB00BDC3F3 /* Image Location */ = {
 			isa = PBXGroup;
 			children = (
 				E853C3A916841DC500BDC3F3 /* ImageLocationController.h */,
 				E853C3AA16841DC600BDC3F3 /* ImageLocationController.m */,
 				E853C3AB16841DC700BDC3F3 /* ImageLocationController.xib */,
 			);
-			name = "Content Attributes";
+			name = "Image Location";
 			sourceTree = "<group>";
 		};
 		E853C3B81685745400BDC3F3 /* Libary */ = {
@@ -467,6 +473,10 @@
 		E86FF3C816A154830046BA2A /* Photo Modal */ = {
 			isa = PBXGroup;
 			children = (
+				E8F5C0E216A53BF60071DCB2 /* Photo.h */,
+				E8F5C0E316A53BF60071DCB2 /* Photo.m */,
+				E8F5C10216A70D900071DCB2 /* PhotoStack.h */,
+				E8F5C10316A70D920071DCB2 /* PhotoStack.m */,
 				E86FF3C916A154900046BA2A /* MyPhoto.h */,
 				E86FF3CA16A154900046BA2A /* MyPhoto.m */,
 				E86FF3CB16A154900046BA2A /* MyPhotoSource.h */,
@@ -581,7 +591,9 @@
 				E853C3651683562A00BDC3F3 /* ImageComment.xcdatamodeld in Sources */,
 				E853C3681683562A00BDC3F3 /* ImageListController.m in Sources */,
 				E853C3AC16841DC700BDC3F3 /* ImageLocationController.m in Sources */,
-				E89C7B8916A44EBB00C6C0B8 /* ImageContent.m in Sources */,
+				E8F5C0E416A53BF60071DCB2 /* Photo.m in Sources */,
+				E8F5C10416A70D930071DCB2 /* PhotoStack.m in Sources */,
+				E8F5C12616A847180071DCB2 /* ImageContent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
