@@ -56,8 +56,6 @@
 		E86FF3D316A154C80046BA2A /* EGOPhotoScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF3BC16A128D80046BA2A /* EGOPhotoScrollView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E86FF3D416A154C80046BA2A /* EGOPhotoImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF3BA16A128CD0046BA2A /* EGOPhotoImageView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E86FF3D516A154C80046BA2A /* EGOPhotoCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF3B816A128C20046BA2A /* EGOPhotoCaptionView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		E86FF3D616A154C80046BA2A /* MyPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF3CA16A154900046BA2A /* MyPhoto.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		E86FF3D716A154C80046BA2A /* MyPhotoSource.m in Sources */ = {isa = PBXBuildFile; fileRef = E86FF3CC16A154900046BA2A /* MyPhotoSource.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E86FF3D916A155F90046BA2A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E86FF3D816A155F90046BA2A /* MessageUI.framework */; };
 		E8D4A2D616A40D0E00D44350 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8D4A2D516A40D0E00D44350 /* AssetsLibrary.framework */; };
 		E8EBD0BC169ACF1C000D118F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8EBD0BB169ACF1C000D118F /* MobileCoreServices.framework */; };
@@ -145,10 +143,6 @@
 		E86FF3C016A128F40046BA2A /* EGOImageLoadConnection.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EGOImageLoadConnection.m; path = EGOPhoto/EGOImageLoader/EGOImageLoadConnection.m; sourceTree = "<group>"; };
 		E86FF3C116A128F40046BA2A /* EGOImageLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EGOImageLoader.h; path = EGOPhoto/EGOImageLoader/EGOImageLoader.h; sourceTree = "<group>"; };
 		E86FF3C216A128F40046BA2A /* EGOImageLoader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = EGOImageLoader.m; path = EGOPhoto/EGOImageLoader/EGOImageLoader.m; sourceTree = "<group>"; };
-		E86FF3C916A154900046BA2A /* MyPhoto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPhoto.h; sourceTree = "<group>"; };
-		E86FF3CA16A154900046BA2A /* MyPhoto.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyPhoto.m; sourceTree = "<group>"; };
-		E86FF3CB16A154900046BA2A /* MyPhotoSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MyPhotoSource.h; sourceTree = "<group>"; };
-		E86FF3CC16A154900046BA2A /* MyPhotoSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyPhotoSource.m; sourceTree = "<group>"; };
 		E86FF3D816A155F90046BA2A /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		E8D4A2D516A40D0E00D44350 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		E8EBD0BB169ACF1C000D118F /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -477,10 +471,6 @@
 				E8F5C0E316A53BF60071DCB2 /* Photo.m */,
 				E8F5C10216A70D900071DCB2 /* PhotoStack.h */,
 				E8F5C10316A70D920071DCB2 /* PhotoStack.m */,
-				E86FF3C916A154900046BA2A /* MyPhoto.h */,
-				E86FF3CA16A154900046BA2A /* MyPhoto.m */,
-				E86FF3CB16A154900046BA2A /* MyPhotoSource.h */,
-				E86FF3CC16A154900046BA2A /* MyPhotoSource.m */,
 			);
 			name = "Photo Modal";
 			sourceTree = "<group>";
@@ -576,8 +566,6 @@
 				E86FF3D316A154C80046BA2A /* EGOPhotoScrollView.m in Sources */,
 				E86FF3D416A154C80046BA2A /* EGOPhotoImageView.m in Sources */,
 				E86FF3D516A154C80046BA2A /* EGOPhotoCaptionView.m in Sources */,
-				E86FF3D616A154C80046BA2A /* MyPhoto.m in Sources */,
-				E86FF3D716A154C80046BA2A /* MyPhotoSource.m in Sources */,
 				E8EBD0C2169BC0DD000D118F /* ColorExtention.m in Sources */,
 				E853C3C6168574E600BDC3F3 /* AbstractActionSheetPicker.m in Sources */,
 				E853C3C7168574E600BDC3F3 /* ActionSheetDatePicker.m in Sources */,
